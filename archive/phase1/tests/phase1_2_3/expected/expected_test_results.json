@@ -1,0 +1,51 @@
+{
+  "suite": "Phase 1.2.3 Security & Reproducibility Suite",
+  "version": "1.2.3",
+  "q01_expected": {
+    "Q01-01": {"status": "PASS", "expected_rows": 1, "department_id": 10, "manager_id": 101, "sub_departments_count": 5, "active_employees_count": 2},
+    "Q01-02": {"status": "PASS", "expected_rows": 1, "department_id": 16, "sub_departments_count": 0, "sub_departments_is_array": true},
+    "Q01-03": {"status": "PASS", "expected_rows": 1, "department_id": 16, "active_employees_count": 0, "active_employees_is_array": true},
+    "Q01-04": {"status": "PASS", "expected_rows": 1, "department_id": 13, "manager_id": null, "description": "Inactive user manager -> manager_id null"},
+    "Q01-05": {"status": "PASS", "expected_rows": 1, "department_id": 11, "manager_id": null, "description": "Suspended membership manager -> manager_id null"},
+    "Q01-06": {"status": "PASS", "expected_rows": 1, "department_id": 15, "manager_id": null, "description": "Deleted membership manager -> manager_id null"},
+    "Q01-07": {"status": "PASS", "expected_rows": 1, "department_id": 12, "manager_id": null, "description": "Cross-tenant manager -> manager_id null"},
+    "Q01-08": {"status": "PASS", "expected_rows": 0, "description": "Suspended caller denied -> 0 rows"},
+    "Q01-09": {"status": "PASS", "expected_rows": 0, "description": "Deleted membership caller denied -> 0 rows"},
+    "Q01-10": {"status": "PASS", "expected_rows": 0, "description": "Cross-tenant caller denied -> 0 rows"},
+    "Q01-11": {"status": "PASS", "expected_rows": 1, "department_id": 10, "excluded_employee_id": 104, "description": "Historical member excluded"},
+    "Q01-12": {"status": "PASS", "expected_rows": 1, "department_id": 10, "excluded_employee_id": 102, "description": "Suspended tenant member excluded"}
+  },
+  "q08_expected": {
+    "Q08-01": {"status": "PASS", "expected_rows": 1, "notice_id": 901, "description": "T1 System Notice visible to T1 caller"},
+    "Q08-02": {"status": "PASS", "expected_rows": 0, "description": "T2 System Notice NOT visible to T1 caller"},
+    "Q08-03": {"status": "PASS", "expected_rows": 1, "notice_id": 903, "description": "Pure T1 Custom Notice visible to recipient caller"},
+    "Q08-04": {"status": "PASS", "expected_rows": 0, "description": "Pure T1 Custom Notice NOT visible to non-recipient caller"},
+    "Q08-05": {"status": "PASS", "expected_rows": 0, "description": "Pure T2 Custom Notice NOT visible to T1 caller"},
+    "Q08-06": {"status": "PASS", "expected_rows": 0, "description": "Vulnerability test: Dept T2 rejected"},
+    "Q08-07": {"status": "PASS", "expected_rows": 0, "description": "Vulnerability test: User T2 rejected"},
+    "Q08-08": {"status": "PASS", "expected_rows": 0, "description": "Vulnerability test: Owner T2 rejected"},
+    "Q08-09": {"status": "PASS", "expected_rows": 0, "description": "Ambig Owner rejected"},
+    "Q08-10": {"status": "PASS", "expected_rows": 0, "description": "Ambig User Member rejected"},
+    "Q08-11": {"status": "PASS", "expected_rows": 0, "description": "Unpublished notice excluded"},
+    "Q08-12": {"status": "PASS", "expected_rows": 0, "description": "Soft deleted notice excluded"},
+    "Q08-13": {"status": "PASS", "expected_rows": 0, "description": "Suspended caller denied"},
+    "Q08-14": {"status": "PASS", "expected_rows": 0, "description": "Deleted membership caller denied"}
+  },
+  "circuit_breaker_expected": {
+    "CB-01": {"decision": "ALLOW", "max_allowed": 5, "candidate_count": 3},
+    "CB-02": {"decision": "ALLOW", "max_allowed": 5, "candidate_count": 5},
+    "CB-03": {"decision": "ABORT", "max_allowed": 5, "candidate_count": 6, "reason": "THRESHOLD_EXCEEDED"},
+    "CB-04": {"decision": "ALLOW", "max_allowed": 1, "candidate_count": 1},
+    "CB-05": {"decision": "ABORT", "max_allowed": 1, "candidate_count": 2, "reason": "THRESHOLD_EXCEEDED"},
+    "CB-06": {"decision": "ALLOW", "max_allowed": 0, "candidate_count": 0},
+    "CB-07": {"decision": "ABORT", "max_allowed": 0, "candidate_count": 1, "reason": "THRESHOLD_EXCEEDED"},
+    "CB-08": {"decision": "ALLOW", "max_allowed": 0, "candidate_count": 0, "reason": "NO_OP_ZERO_POP"},
+    "CB-09": {"decision": "ABORT", "max_allowed": 0, "candidate_count": 1, "reason": "ZERO_POP_NONZERO_DELETE"},
+    "CB-10": {"decision": "ALLOW", "max_allowed": 50, "candidate_count": 50},
+    "CB-11": {"decision": "ABORT", "max_allowed": 50, "candidate_count": 51, "reason": "THRESHOLD_EXCEEDED"},
+    "CB-12": {"decision": "ABORT", "max_allowed": 0, "candidate_count": 1, "reason": "PROTECTED_ENTITY_TYPE"},
+    "CB-13": {"decision": "ABORT", "max_allowed": 5, "candidate_count": 1, "reason": "INCOMPLETE_EXTRACTION"},
+    "CB-14": {"decision": "SIMULATED_TRIP", "dry_run": true, "max_allowed": 5, "candidate_count": 10},
+    "CB-15": {"decision": "BATCH_ABORT", "reason": "BATCH_CHILD_FAILED"}
+  }
+}

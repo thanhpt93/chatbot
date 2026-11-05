@@ -1,0 +1,130 @@
+{
+  "fixture_name": "phase1_2_2_synthetic_multi_tenant_fixture",
+  "description": "Deterministic synthetic multi-tenant dataset (Tenant 1 & Tenant 2) for executing Phase 1.2.2 SQL-vs-Cypher equivalence, Attendance Cases A-E for both user_id and employee_number (CRITICAL-01), LeaveBalance ambiguity & historical retention (CRITICAL-02), Q05 Tenant A & B isolation (CRITICAL-03), Q08 all 8 Notice/Audience isolation cases (CRITICAL-04), Department Manager lifecycle all 6 cases (HIGH-05), and Reconciliation Patterns R-1..R-7 (CRITICAL-06).",
+  "tenants": [
+    {"id": 1, "tenant_key": "tenant_alpha", "name": "Tenant Alpha", "status": "active", "isolation_mode": "shared", "is_default": true, "is_deleted": false},
+    {"id": 2, "tenant_key": "tenant_beta", "name": "Tenant Beta", "status": "active", "isolation_mode": "shared", "is_default": false, "is_deleted": false}
+  ],
+  "users": [
+    {"id": 101, "username": "alice.t1", "email": "alice@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 102, "username": "bob.suspended", "email": "bob@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 103, "username": "charlie.deleted_mem", "email": "charlie@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 104, "username": "david.multi_active", "email": "david@both.com", "is_active": true, "is_deleted": false},
+    {"id": 105, "username": "eve.t1_active_t2_inactive", "email": "eve@both.com", "is_active": true, "is_deleted": false},
+    {"id": 106, "username": "frank.resigned_single", "email": "frank@alpha.com", "is_active": false, "is_deleted": false},
+    {"id": 107, "username": "ivan.inactive_deleted_mem", "email": "ivan@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 108, "username": "judy.deleted_user", "email": "judy@alpha.com", "is_active": false, "is_deleted": true},
+    {"id": 201, "username": "grace.t2", "email": "grace@beta.com", "is_active": true, "is_deleted": false},
+    {"id": 202, "username": "heidi.t2_mgr", "email": "heidi@beta.com", "is_active": true, "is_deleted": false}
+  ],
+  "tenant_user_memberships": [
+    {"id": 1, "tenant_id": 1, "user_id": 101, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 2, "tenant_id": 1, "user_id": 102, "status": "suspended", "is_default": true, "is_deleted": false},
+    {"id": 3, "tenant_id": 1, "user_id": 103, "status": "active", "is_default": true, "is_deleted": true},
+    {"id": 4, "tenant_id": 1, "user_id": 104, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 5, "tenant_id": 2, "user_id": 104, "status": "active", "is_default": false, "is_deleted": false},
+    {"id": 6, "tenant_id": 1, "user_id": 105, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 7, "tenant_id": 2, "user_id": 105, "status": "suspended", "is_default": false, "is_deleted": false},
+    {"id": 8, "tenant_id": 1, "user_id": 106, "status": "inactive", "is_default": true, "is_deleted": false},
+    {"id": 9, "tenant_id": 2, "user_id": 201, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 10, "tenant_id": 2, "user_id": 202, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 11, "tenant_id": 1, "user_id": 107, "status": "inactive", "is_default": true, "is_deleted": true},
+    {"id": 12, "tenant_id": 1, "user_id": 108, "status": "active", "is_default": true, "is_deleted": false}
+  ],
+  "user_profiles": [
+    {"id": 1, "tenant_id": 1, "user_id": 101, "display_name": "Alice Alpha", "employee_number": "EMP-101", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 2, "tenant_id": 1, "user_id": 102, "display_name": "Bob Suspended", "employee_number": "EMP-102", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 3, "tenant_id": 1, "user_id": 103, "display_name": "Charlie DeletedMem", "employee_number": "EMP-103", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 4, "tenant_id": 1, "user_id": 104, "display_name": "David Multi T1", "employee_number": "EMP-104", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 5, "tenant_id": 2, "user_id": 104, "display_name": "David Multi T2", "employee_number": "EMP-104", "department_id": 20, "is_default": false, "is_resigned": false},
+    {"id": 6, "tenant_id": 1, "user_id": 105, "display_name": "Eve T1 Active", "employee_number": "EMP-105", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 7, "tenant_id": 2, "user_id": 105, "display_name": "Eve T2 Suspended", "employee_number": "EMP-105", "department_id": 20, "is_default": false, "is_resigned": false},
+    {"id": 8, "tenant_id": 1, "user_id": 106, "display_name": "Frank Resigned", "employee_number": "EMP-106", "department_id": 10, "is_default": true, "is_resigned": true},
+    {"id": 9, "tenant_id": 2, "user_id": 201, "display_name": "Grace Beta", "employee_number": "EMP-201", "department_id": 20, "is_default": true, "is_resigned": false},
+    {"id": 10, "tenant_id": 2, "user_id": 202, "display_name": "Heidi Beta Mgr", "employee_number": "EMP-202", "department_id": 20, "is_default": true, "is_resigned": false},
+    {"id": 11, "tenant_id": 1, "user_id": 107, "display_name": "Ivan InactiveDeletedMem", "employee_number": "EMP-107", "department_id": 10, "is_default": true, "is_resigned": true},
+    {"id": 12, "tenant_id": 1, "user_id": 108, "display_name": "Judy DeletedUser", "employee_number": "EMP-108", "department_id": 10, "is_default": true, "is_resigned": true}
+  ],
+  "departments": [
+    {"id": 10, "tenant_id": 1, "code": "ENG-T1", "name": "Engineering Alpha (Case 1: Active Mgr + Active Mem)", "parent_id": null, "manager_user_id": 101, "depth": 1, "path": "/10", "department_type": "division", "is_active": true},
+    {"id": 11, "tenant_id": 1, "code": "QA-T1", "name": "QA Alpha (Case 3: Suspended Mem Mgr)", "parent_id": 10, "manager_user_id": 102, "depth": 2, "path": "/10/11", "department_type": "team", "is_active": true},
+    {"id": 12, "tenant_id": 1, "code": "OPS-T1", "name": "Ops Alpha (Case 6: Cross-Tenant Mgr)", "parent_id": 10, "manager_user_id": 202, "depth": 2, "path": "/10/12", "department_type": "team", "is_active": true},
+    {"id": 13, "tenant_id": 1, "code": "FIN-T1", "name": "Finance Alpha (Case 2: Inactive User + Inactive Mem Mgr)", "parent_id": 10, "manager_user_id": 106, "depth": 2, "path": "/10/13", "department_type": "team", "is_active": true},
+    {"id": 14, "tenant_id": 1, "code": "HR-T1", "name": "HR Alpha (Case 4: Deleted User Mgr)", "parent_id": 10, "manager_user_id": 108, "depth": 2, "path": "/10/14", "department_type": "team", "is_active": true},
+    {"id": 15, "tenant_id": 1, "code": "LEG-T1", "name": "Legal Alpha (Case 5: Deleted Mem Mgr)", "parent_id": 10, "manager_user_id": 103, "depth": 2, "path": "/10/15", "department_type": "team", "is_active": true},
+    {"id": 20, "tenant_id": 2, "code": "ENG-T2", "name": "Engineering Beta", "parent_id": null, "manager_user_id": 202, "depth": 1, "path": "/20", "department_type": "division", "is_active": true}
+  ],
+  "department_members": [
+    {"id": 1, "tenant_id": 1, "department_id": 10, "user_id": 101, "role_in_department": "manager", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 2, "tenant_id": 1, "department_id": 10, "user_id": 105, "role_in_department": "member", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 3, "tenant_id": 1, "department_id": 11, "user_id": 101, "role_in_department": "member", "is_primary": false, "effective_from": "2024-01-01", "effective_to": "2024-12-31"},
+    {"id": 4, "tenant_id": 2, "department_id": 20, "user_id": 201, "role_in_department": "member", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 5, "tenant_id": 2, "department_id": 20, "user_id": 202, "role_in_department": "manager", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null}
+  ],
+  "attendance_daily_records": [
+    {"id": 1001, "user_id": 101, "employee_code": "EMP-101", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case A (user_id): status='active', is_deleted=false -> Accept (RESOLVED_BY_USER_ID)"},
+    {"id": 1002, "user_id": 106, "employee_code": "EMP-106", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case B (user_id): status='inactive', is_deleted=false -> Reject (INVALID_TENANT)"},
+    {"id": 1003, "user_id": 102, "employee_code": "EMP-102", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case C (user_id): status='suspended', is_deleted=false -> Reject (INVALID_TENANT)"},
+    {"id": 1004, "user_id": 103, "employee_code": "EMP-103", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case D (user_id): status='active', is_deleted=true -> Reject (INVALID_TENANT)"},
+    {"id": 1005, "user_id": 107, "employee_code": "EMP-107", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case E (user_id): status='inactive', is_deleted=true -> Reject (INVALID_TENANT)"},
+    {"id": 1006, "user_id": null, "employee_code": "EMP-105", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case A (employee_number): status='active', is_deleted=false in T1 (and suspended in T2) -> Accept (RESOLVED_BY_EMPLOYEE_NUMBER)"},
+    {"id": 1007, "user_id": null, "employee_code": "EMP-106", "work_date": "2026-10-02", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case B (employee_number): status='inactive', is_deleted=false -> Reject (UNRESOLVED)"},
+    {"id": 1008, "user_id": null, "employee_code": "EMP-102", "work_date": "2026-10-02", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case C (employee_number): status='suspended', is_deleted=false -> Reject (UNRESOLVED)"},
+    {"id": 1009, "user_id": null, "employee_code": "EMP-103", "work_date": "2026-10-02", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case D (employee_number): status='active', is_deleted=true -> Reject (UNRESOLVED)"},
+    {"id": 1010, "user_id": null, "employee_code": "EMP-107", "work_date": "2026-10-02", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Case E (employee_number): status='inactive', is_deleted=true -> Reject (UNRESOLVED)"},
+    {"id": 1011, "user_id": null, "employee_code": "EMP-104", "work_date": "2026-10-01", "status": "present", "is_late": false, "is_early_leave": false, "actual_minutes": 480, "case_id": "Multi-tenant active in T1 & T2 (employee_number) -> Reject (AMBIGUOUS)"}
+  ],
+  "user_leave_year_balances": [
+    {"id": 501, "user_id": 101, "year": 2026, "opening_days": 12.0, "carryover_days": 2.0, "seniority_days": 1.0, "manual_adjustment_days": 0.0, "remaining_days": 10.0, "carryover_available_days": 0.0, "case_id": "Active single-tenant user (T1) -> Loaded T1"},
+    {"id": 502, "user_id": 106, "year": 2026, "opening_days": 12.0, "carryover_days": 0.0, "seniority_days": 0.0, "manual_adjustment_days": 0.0, "remaining_days": 8.0, "carryover_available_days": 0.0, "case_id": "Resigned single-tenant user (T1) -> Retained T1"},
+    {"id": 503, "user_id": 104, "year": 2026, "opening_days": 15.0, "carryover_days": 0.0, "seniority_days": 0.0, "manual_adjustment_days": 0.0, "remaining_days": 15.0, "carryover_available_days": 0.0, "case_id": "Multi-tenant user (T1 & T2) -> Quarantined AMBIGUOUS_TENANT"},
+    {"id": 504, "user_id": 105, "year": 2026, "opening_days": 12.0, "carryover_days": 0.0, "seniority_days": 0.0, "manual_adjustment_days": 0.0, "remaining_days": 9.0, "carryover_available_days": 0.0, "case_id": "Dual-tenant membership history (T1 active, T2 suspended) -> Quarantined AMBIGUOUS_TENANT"}
+  ],
+  "user_leave_monthly_balances": [
+    {"id": 601, "user_id": 101, "year": 2026, "month": 10, "accrued_days": 10.0, "used_days": 5.0},
+    {"id": 602, "user_id": 106, "year": 2026, "month": 10, "accrued_days": 8.0, "used_days": 4.0},
+    {"id": 603, "user_id": 104, "year": 2026, "month": 10, "accrued_days": 10.0, "used_days": 0.0}
+  ],
+  "approval_requests": [
+    {"id": 701, "code": "APR-T1-01", "request_type": "leave", "status": "IN_PROGRESS", "title": "T1 Leave Request", "created_by_user_id": 105, "submitted_at": "2026-10-02T09:00:00Z", "is_deleted": false},
+    {"id": 702, "code": "APR-T2-01", "request_type": "leave", "status": "IN_PROGRESS", "title": "T2 Leave Request", "created_by_user_id": 201, "submitted_at": "2026-10-02T10:00:00Z", "is_deleted": false},
+    {"id": 703, "code": "APR-T1-DEL", "request_type": "leave", "status": "IN_PROGRESS", "title": "T1 Deleted Request", "created_by_user_id": 105, "submitted_at": "2026-10-02T11:00:00Z", "is_deleted": true}
+  ],
+  "approval_participants": [
+    {"id": 801, "request_id": 701, "user_id": 101, "participant_role": "approver", "sequence_order": 1, "action_status": "PENDING"},
+    {"id": 802, "request_id": 702, "user_id": 101, "participant_role": "approver", "sequence_order": 1, "action_status": "PENDING"},
+    {"id": 803, "request_id": 702, "user_id": 202, "participant_role": "approver", "sequence_order": 2, "action_status": "PENDING"},
+    {"id": 804, "request_id": 703, "user_id": 101, "participant_role": "approver", "sequence_order": 1, "action_status": "PENDING"},
+    {"id": 805, "request_id": 701, "user_id": 104, "participant_role": "approver", "sequence_order": 2, "action_status": "PENDING"},
+    {"id": 806, "request_id": 702, "user_id": 104, "participant_role": "approver", "sequence_order": 3, "action_status": "PENDING"},
+    {"id": 807, "request_id": 701, "user_id": 102, "participant_role": "approver", "sequence_order": 4, "action_status": "PENDING"}
+  ],
+  "audiences": [
+    {"id": 1, "code": "SYSTEM_ALL", "name": "All Company", "audience_type": "ALL", "is_system": true, "owner_user_id": null, "is_active": true},
+    {"id": 2, "code": "AUD_T1_ENG", "name": "T1 Engineering Custom", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 101, "is_active": true},
+    {"id": 3, "code": "AUD_T2_ENG", "name": "T2 Engineering Custom", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 202, "is_active": true}
+  ],
+  "audience_department_members": [
+    {"id": 1, "audience_id": 2, "department_id": 10},
+    {"id": 2, "audience_id": 2, "department_id": 11},
+    {"id": 3, "audience_id": 3, "department_id": 20}
+  ],
+  "audience_user_members": [
+    {"id": 1, "audience_id": 2, "user_id": 105},
+    {"id": 2, "audience_id": 3, "user_id": 101},
+    {"id": 3, "audience_id": 3, "user_id": 201}
+  ],
+  "notices": [
+    {"id": 901, "title": "T1 System All Notice", "notice_type": "general", "priority": "high", "audience_id": 1, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T08:00:00Z", "is_deleted": false},
+    {"id": 902, "title": "T1 Custom Eng Notice", "notice_type": "dept", "priority": "normal", "audience_id": 2, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T09:00:00Z", "is_deleted": false},
+    {"id": 903, "title": "T2 System All Notice (Must NOT leak to T1)", "notice_type": "general", "priority": "high", "audience_id": 1, "created_by_user_id": 202, "is_published": true, "published_at": "2026-10-03T10:00:00Z", "is_deleted": false},
+    {"id": 904, "title": "T1 Notice Mismatched T2 Audience (Must be blocked)", "notice_type": "dept", "priority": "normal", "audience_id": 3, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T11:00:00Z", "is_deleted": false}
+  ],
+  "project_tags": [
+    {"id": 1, "project_id": 1, "name": "backend", "color": "#FF0000"},
+    {"id": 2, "project_id": 1, "name": "urgent", "color": "#00FF00"}
+  ],
+  "talk_tags": [
+    {"id": 1, "name": "announcement", "color": "#0000FF"}
+  ]
+}

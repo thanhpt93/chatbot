@@ -1,0 +1,59 @@
+ROUTINE KEYS: ['schema_name', 'routine_name', 'result_data_type', 'argument_data_types', 'routine_type', 'source_code', 'description']
+================================================================================
+{
+ "schema_name": "public",
+ "routine_name": "check_user_permission",
+ "result_data_type": "boolean",
+ "argument_data_types": "p_tenant_id bigint, p_user_id bigint, p_permission_code character varying",
+ "routine_type": "FUNCTION",
+ "source_code": "\nDECLARE\n    v_tenant_id BIGINT;\n    v_has_permission BOOLEAN;\nBEGIN\n    v_tenant_id := p_tenant_id;\n\n    IF v_tenant_id IS NULL THEN\n        SELECT id\n        INTO v_tenant_id\n        FROM public.tenants\n        WHERE is_default = TRUE\n          AND is_deleted = FALSE\n        ORDER BY id\n        LIMIT 1;\n    END IF;\n\n    IF v_tenant_id IS NULL THEN\n        RETURN FALSE;\n    END IF;\n\n    IF NOT EXISTS (\n        SELECT 1\n        FROM public.tenant_user_memberships membership\n        WHERE membership.tenant_id = v_tenant_id\n          AND membership.user_id = p_user_id\n          AND membership.status = 'active'\n          AND membership.is_deleted = FALSE\n    ) THEN\n        RETURN FALSE;\n    END IF;\n\n    SELECT COALESCE(up.is_granted, FALSE)\n    INTO v_has_permission\n    FROM public.user_permissions up\n    JOIN public.permissions p ON p.id = up.permission_id\n    WHERE up.tenant_id = v_tenant_id\n      AND up.user_id = p_user_id\n      AND p.code = p_permission_code\n    LIMIT 1;\n\n    IF FOUND THEN\n        RETURN v_has_permission;\n    END IF;\n\n    SELECT COALESCE(BOOL_OR(rp.is_granted), FALSE)\n    INTO v_has_permission\n    FROM public.user_role_assignments ura\n    JOIN public.roles r\n      ON r.id = ura.role_id\n     AND r.tenant_id = ura.tenant_id\n    JOIN public.role_permissions rp\n      ON rp.role_id = r.id\n     AND rp.tenant_id = ura.tenant_id\n    JOIN public.permissions p ON p.id = rp.permission_id\n    WHERE ura.tenant_id = v_tenant_id\n      AND ura.user_id = p_user_id\n      AND r.is_active = TRUE\n      AND p.code = p_permission_code\n      AND rp.is_granted = TRUE;\n\n    RETURN COALESCE(v_has_permission, FALSE);\nEND;\n",
+ "description": null
+}
+================================================================================
+{
+ "schema_name": "public",
+ "routine_name": "check_user_permission",
+ "result_data_type": "boolean",
+ "argument_data_types": "p_user_id bigint, p_permission_code character varying",
+ "routine_type": "FUNCTION",
+ "source_code": "\n    SELECT public.check_user_permission(NULL::BIGINT, p_user_id, p_permission_code);\n",
+ "description": null
+}
+================================================================================
+{
+ "schema_name": "public",
+ "routine_name": "get_user_menu_actions",
+ "result_data_type": "TABLE(action_code character varying)",
+ "argument_data_types": "p_user_id bigint, p_menu_code character varying",
+ "routine_type": "FUNCTION",
+ "source_code": "\nBEGIN\n    RETURN QUERY\n    SELECT DISTINCT LOWER(a.code)\n    FROM menus m\n    JOIN menu_actions ma ON ma.menu_id = m.id\n    JOIN actions a ON a.id = ma.action_id\n    JOIN permissions p ON p.resource_type = 'menu'\n                      AND p.resource_id = m.id\n                      AND p.action_id = a.id\n    WHERE m.code = p_menu_code\n      AND m.is_active = TRUE\n      AND check_user_permission(p_user_id, p.code)\n    ORDER BY LOWER(a.code);\nEND;\n",
+ "description": null
+}
+================================================================================
+{
+ "schema_name": "public",
+ "routine_name": "get_user_menus",
+ "result_data_type": "TABLE(id integer, code character varying, name character varying, path character varying, icon character varying, parent_id integer, sort_order integer)",
+ "argument_data_types": "p_user_id bigint",
+ "routine_type": "FUNCTION",
+ "source_code": "\nBEGIN\n    RETURN QUERY\n    SELECT DISTINCT\n        m.id,\n        m.code,\n        m.name,\n        m.path,\n        m.icon,\n        m.parent_id,\n        m.sort_order\n    FROM menus m\n    WHERE m.is_active = TRUE\n      AND check_user_permission(p_user_id, 'menu.' || m.code || '.view')\n    ORDER BY m.sort_order, m.id;\nEND;\n",
+ "description": null
+}
+================================================================================
+TRIGGERS:
+{"schema_name": "public", "table_name": "kanban_columns", "trigger_name": "trg_kanban_columns_refresh_project_performance_counters", "event_manipulation": "UPDATE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_kanban_columns_refresh_project_performance_counters()"}
+{"schema_name": "public", "table_name": "project_members", "trigger_name": "trg_project_members_refresh_performance_counters", "event_manipulation": "INSERT", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_project_members_refresh_performance_counters()"}
+{"schema_name": "public", "table_name": "project_members", "trigger_name": "trg_project_members_refresh_performance_counters", "event_manipulation": "DELETE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_project_members_refresh_performance_counters()"}
+{"schema_name": "public", "table_name": "project_members", "trigger_name": "trg_project_members_refresh_performance_counters", "event_manipulation": "UPDATE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_project_members_refresh_performance_counters()"}
+{"schema_name": "public", "table_name": "ticket_attachments", "trigger_name": "trg_ticket_attachments_count", "event_manipulation": "DELETE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_attachments", "trigger_name": "trg_ticket_attachments_count", "event_manipulation": "INSERT", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_checklists", "trigger_name": "trg_ticket_checklists_count", "event_manipulation": "DELETE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_checklists", "trigger_name": "trg_ticket_checklists_count", "event_manipulation": "INSERT", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_checklists", "trigger_name": "trg_ticket_checklists_count", "event_manipulation": "UPDATE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_comments", "trigger_name": "trg_ticket_comments_count", "event_manipulation": "DELETE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_comments", "trigger_name": "trg_ticket_comments_count", "event_manipulation": "INSERT", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "ticket_comments", "trigger_name": "trg_ticket_comments_count", "event_manipulation": "UPDATE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION update_ticket_counts()"}
+{"schema_name": "public", "table_name": "tickets", "trigger_name": "trg_generate_ticket_code", "event_manipulation": "INSERT", "action_timing": "BEFORE", "action_statement": "EXECUTE FUNCTION generate_ticket_code()"}
+{"schema_name": "public", "table_name": "tickets", "trigger_name": "trg_tickets_refresh_project_performance_counters", "event_manipulation": "INSERT", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_tickets_refresh_project_performance_counters()"}
+{"schema_name": "public", "table_name": "tickets", "trigger_name": "trg_tickets_refresh_project_performance_counters", "event_manipulation": "DELETE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_tickets_refresh_project_performance_counters()"}
+{"schema_name": "public", "table_name": "tickets", "trigger_name": "trg_tickets_refresh_project_performance_counters", "event_manipulation": "UPDATE", "action_timing": "AFTER", "action_statement": "EXECUTE FUNCTION trg_tickets_refresh_project_performance_counters()"}

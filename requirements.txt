@@ -1,0 +1,10 @@
+# Python Dependencies for Groupware AI Chatbot Validation Harness
+# Python >= 3.10 required
+
+# Core utilities
+typing-extensions>=4.5.0
+pydantic>=2.0.0
+
+# Optional Database Drivers for Live Integration Testing (Phase 2)
+psycopg2-binary>=2.9.9
+neo4j>=5.15.0

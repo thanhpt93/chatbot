@@ -1,0 +1,3042 @@
+{
+ "source": "artifacts\\database-discovery\\schema_inventory.json",
+ "database_version": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+ "tables": {
+  "users": {
+   "row_count": 360,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)",
+    "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)",
+    "CREATE UNIQUE INDEX users_username_key ON public.users USING btree (username)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "username",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "email",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "password_hash",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "last_login",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "email_verified",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "email_verification_token",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "email_verification_expires_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "edited_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "restored_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "user_profiles": {
+   "row_count": 360,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX user_profiles_pkey ON public.user_profiles USING btree (id)",
+    "CREATE UNIQUE INDEX ux_user_profiles_tenant_user ON public.user_profiles USING btree (tenant_id, user_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "display_name",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "avatar_url",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "birth_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "mobile_phone",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "office_phone",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "fax_number",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "employee_number",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "department_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "grade",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "duty",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "joining_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "locale",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "timezone",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "bio",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "address",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "social_links",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "cover_image_url",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "eng_name",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "gender",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "section",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "contract_type",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "contract_period_from",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "contract_period_to",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "position",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "is_resigned",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "resigned_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "attendance_mode",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "tax_code",
+     "type": "varchar",
+     "nullable": true
+    }
+   ]
+  },
+  "tenants": {
+   "row_count": 1,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX tenants_pkey ON public.tenants USING btree (id)",
+    "CREATE UNIQUE INDEX ux_tenants_active_tenant_key ON public.tenants USING btree (lower((tenant_key)::text)) WHERE (is_deleted = false)",
+    "CREATE UNIQUE INDEX ux_tenants_single_default ON public.tenants USING btree (is_default) WHERE ((is_default = true) AND (is_deleted = false))"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "tenant_key",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "status",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "isolation_mode",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "is_default",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "created_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "updated_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": false
+    }
+   ]
+  },
+  "tenant_user_memberships": {
+   "row_count": 360,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX tenant_user_memberships_pkey ON public.tenant_user_memberships USING btree (id)",
+    "CREATE UNIQUE INDEX ux_tenant_user_memberships_active_pair ON public.tenant_user_memberships USING btree (tenant_id, user_id) WHERE (is_deleted = false)",
+    "CREATE UNIQUE INDEX ux_tenant_user_memberships_default_per_user ON public.tenant_user_memberships USING btree (user_id) WHERE ((is_default = true) AND (is_deleted = false))"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "status",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "is_default",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "joined_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "created_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "updated_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": false
+    }
+   ]
+  },
+  "departments": {
+   "row_count": 103,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX departments_pkey ON public.departments USING btree (id)",
+    "CREATE UNIQUE INDEX ux_departments_tenant_code ON public.departments USING btree (tenant_id, lower((code)::text)) WHERE (code IS NOT NULL)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "parent_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "sort_order",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "depth",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "path",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "metadata",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "manager_user_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "department_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "level",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "color",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "company_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "site_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "cost_center_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "effective_from",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "effective_to",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "department_members": {
+   "row_count": 397,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX department_members_pkey ON public.department_members USING btree (id)",
+    "CREATE UNIQUE INDEX ux_department_members_tenant_assignment_period ON public.department_members USING btree (tenant_id, department_id, user_id, effective_to)",
+    "CREATE UNIQUE INDEX ux_department_members_tenant_primary_active_user ON public.department_members USING btree (tenant_id, user_id) WHERE ((is_primary = true) AND (effective_to IS NULL))"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "department_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "position_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "role_in_department",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "is_primary",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "effective_from",
+     "type": "date",
+     "nullable": false
+    },
+    {
+     "name": "effective_to",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "roles": {
+   "row_count": 42,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)",
+    "CREATE UNIQUE INDEX ux_roles_tenant_code ON public.roles USING btree (tenant_id, lower((code)::text))"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "level",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "is_system",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "created_by",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "permissions": {
+   "row_count": 247,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX permissions_code_key ON public.permissions USING btree (code)",
+    "CREATE UNIQUE INDEX permissions_pkey ON public.permissions USING btree (id)",
+    "CREATE UNIQUE INDEX uq_permissions_menu_resource_action ON public.permissions USING btree (resource_type, resource_id, action_id) WHERE ((resource_type)::text = 'menu'::text)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "resource_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "resource_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "action_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "rule_id",
+     "type": "int8",
+     "nullable": true
+    }
+   ]
+  },
+  "user_role_assignments": {
+   "row_count": 448,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX user_role_assignments_pkey ON public.user_role_assignments USING btree (id)",
+    "CREATE UNIQUE INDEX ux_user_role_assignments_tenant_user_role ON public.user_role_assignments USING btree (tenant_id, user_id, role_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "role_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "assigned_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "assigned_by",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "role_permissions": {
+   "row_count": 1535,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX role_permissions_pkey ON public.role_permissions USING btree (id)",
+    "CREATE UNIQUE INDEX ux_role_permissions_tenant_role_permission ON public.role_permissions USING btree (tenant_id, role_id, permission_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "role_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "permission_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "is_granted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "granted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "granted_by",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "user_permissions": {
+   "row_count": 51,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX user_permissions_pkey ON public.user_permissions USING btree (id)",
+    "CREATE UNIQUE INDEX ux_user_permissions_tenant_user_permission ON public.user_permissions USING btree (tenant_id, user_id, permission_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "permission_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "is_granted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "granted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "granted_by",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "projects": {
+   "row_count": 65,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX projects_pkey ON public.projects USING btree (id)",
+    "CREATE UNIQUE INDEX uq_projects_key ON public.projects USING btree (key) WHERE (is_deleted = false)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "key",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "icon",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "color_code",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "status",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "metadata",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "status_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "start_date",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "end_date",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "sort_order",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "activity_logging_mode",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "members_count",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "tickets_count",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "completed_tickets_count",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "client_code",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "service_type",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "classification",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "stage",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "period_ym",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "phase_round",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "contract_file_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "approval_status",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "approved_by_user_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "approved_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "reject_reason",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "plan_code",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "approver_user_ids",
+     "type": "_int8",
+     "nullable": true
+    },
+    {
+     "name": "contract_translation_file_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "payment_terms",
+     "type": "varchar",
+     "nullable": true
+    }
+   ]
+  },
+  "project_members": {
+   "row_count": 356,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX project_members_pkey ON public.project_members USING btree (id)",
+    "CREATE UNIQUE INDEX uq_project_members_project_user ON public.project_members USING btree (project_id, user_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "project_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "role",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "joined_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "invited_by_user_id",
+     "type": "int8",
+     "nullable": true
+    }
+   ]
+  },
+  "tickets": {
+   "row_count": 668,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX tickets_pkey ON public.tickets USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "project_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "sprint_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "parent_ticket_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "code",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "priority",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "due_date",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "start_date",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "completed_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "estimated_hours",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "story_points",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "comments_count",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "attachments_count",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "checklists_count",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "checklists_completed",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "position",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "note",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "status",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "column_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "actual_hours",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "type_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "quantity",
+     "type": "numeric",
+     "nullable": false
+    },
+    {
+     "name": "unit_price",
+     "type": "numeric",
+     "nullable": false
+    }
+   ]
+  },
+  "ticket_assignees": {
+   "row_count": 1008,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX ticket_assignees_pkey ON public.ticket_assignees USING btree (id)",
+    "CREATE UNIQUE INDEX uq_ticket_assignees_ticket_user ON public.ticket_assignees USING btree (ticket_id, user_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "ticket_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "assigned_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "assigned_by_user_id",
+     "type": "int8",
+     "nullable": true
+    }
+   ]
+  },
+  "project_sprints": {
+   "row_count": 40,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX project_sprints_pkey ON public.project_sprints USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "project_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "goal",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "start_date",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "end_date",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "status",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "kanban_columns": {
+   "row_count": 268,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX kanban_columns_pkey ON public.kanban_columns USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "project_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "status_group",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "color_class",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "position",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "is_default",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "ticket_limit",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "approval_requests": {
+   "row_count": 4709,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX approval_requests_code_key ON public.approval_requests USING btree (code)",
+    "CREATE UNIQUE INDEX approval_requests_pkey ON public.approval_requests USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "request_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "status",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "reason",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "submitted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "completed_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "start_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "start_half",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "end_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "end_half",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "total_days",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "payload",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "leave_type",
+     "type": "varchar",
+     "nullable": true
+    }
+   ]
+  },
+  "approval_participants": {
+   "row_count": 12720,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX approval_participants_pkey ON public.approval_participants USING btree (id)",
+    "CREATE UNIQUE INDEX approval_participants_request_id_user_id_participant_role_key ON public.approval_participants USING btree (request_id, user_id, participant_role)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "request_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "participant_role",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "sequence_order",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "action_status",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "acted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "note",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "approval_workflow_templates": {
+   "row_count": 9,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX approval_workflow_templates_code_key ON public.approval_workflow_templates USING btree (code)",
+    "CREATE UNIQUE INDEX approval_workflow_templates_pkey ON public.approval_workflow_templates USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "request_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "priority",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "schedule_events": {
+   "row_count": 349,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX schedule_events_pkey ON public.schedule_events USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "group_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "title",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "notes",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "event_date",
+     "type": "date",
+     "nullable": false
+    },
+    {
+     "name": "start_time",
+     "type": "time",
+     "nullable": false
+    },
+    {
+     "name": "end_time",
+     "type": "time",
+     "nullable": false
+    },
+    {
+     "name": "type_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "category_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "room_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "location",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "visibility",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "is_all_day",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "customer",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "recurrence_type",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "recurrence_end_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "end_date",
+     "type": "date",
+     "nullable": false
+    },
+    {
+     "name": "updated_by_id",
+     "type": "int8",
+     "nullable": true
+    }
+   ]
+  },
+  "schedule_event_participants": {
+   "row_count": 1241,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX schedule_event_participants_event_id_user_id_key ON public.schedule_event_participants USING btree (event_id, user_id)",
+    "CREATE UNIQUE INDEX schedule_event_participants_pkey ON public.schedule_event_participants USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "event_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "status",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "is_required",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "schedule_rooms": {
+   "row_count": 13,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX schedule_rooms_name_key ON public.schedule_rooms USING btree (name)",
+    "CREATE UNIQUE INDEX schedule_rooms_pkey ON public.schedule_rooms USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "capacity",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "sort_order",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "notices": {
+   "row_count": 99,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX notices_pkey ON public.notices USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "content",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "notice_type",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "audience_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_published",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "published_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "priority",
+     "type": "varchar",
+     "nullable": true
+    }
+   ]
+  },
+  "audiences": {
+   "row_count": 116,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX audiences_code_key ON public.audiences USING btree (code)",
+    "CREATE UNIQUE INDEX audiences_pkey ON public.audiences USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "audience_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "is_system",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "owner_user_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "metadata",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "talk_posts": {
+   "row_count": 247,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX talk_posts_pkey ON public.talk_posts USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "author_user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "audience_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "content",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "assets": {
+   "row_count": 685,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX assets_code_key ON public.assets USING btree (code)",
+    "CREATE UNIQUE INDEX assets_pkey ON public.assets USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "description",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "category_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "purchase_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "purchase_price",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "supplier",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "invoice_number",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "warranty_expiry_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "current_value",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "status",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "location",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "department_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "assigned_user_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "serial_number",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "model",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "manufacturer",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "specifications",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "barcode",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "qr_code_url",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "acquisition_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "lease_start_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "lease_end_date",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "lease_vendor",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "lease_contract_number",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "lease_monthly_fee",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "lease_deposit",
+     "type": "numeric",
+     "nullable": true
+    },
+    {
+     "name": "unit",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "quantity",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "condition",
+     "type": "varchar",
+     "nullable": true
+    }
+   ]
+  },
+  "asset_categories": {
+   "row_count": 30,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX asset_categories_code_key ON public.asset_categories USING btree (code)",
+    "CREATE UNIQUE INDEX asset_categories_pkey ON public.asset_categories USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "code",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "parent_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "sort_order",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "is_active",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "files": {
+   "row_count": 3255,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX files_pkey ON public.files USING btree (id)",
+    "CREATE UNIQUE INDEX files_storage_provider_file_url_key ON public.files USING btree (storage_provider, file_url)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "storage_provider",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "file_url",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "original_name",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "content_type",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "file_ext",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "size_bytes",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "checksum_sha256",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "uploaded_by_user_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "uploaded_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": true
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "metadata",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "request_type",
+     "type": "varchar",
+     "nullable": true
+    }
+   ]
+  },
+  "chat_conversations": {
+   "row_count": 329,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX chat_conversations_pkey ON public.chat_conversations USING btree (id)",
+    "CREATE UNIQUE INDEX uq_chat_conversations_direct_key ON public.chat_conversations USING btree (direct_key) WHERE (direct_key IS NOT NULL)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "conversation_type",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "direct_key",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "title",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int4",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "avatar_url",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "metadata",
+     "type": "jsonb",
+     "nullable": true
+    },
+    {
+     "name": "last_message_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "last_message_seq",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "theme",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "active_emoji",
+     "type": "varchar",
+     "nullable": false
+    }
+   ]
+  },
+  "chat_conversation_members": {
+   "row_count": 783,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX chat_conversation_members_pkey ON public.chat_conversation_members USING btree (id)",
+    "CREATE UNIQUE INDEX uq_chat_conversation_members_conversation_user ON public.chat_conversation_members USING btree (conversation_id, user_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "conversation_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "role",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "joined_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "last_read_message_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "last_delivered_message_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "is_pinned",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "is_muted",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "archived_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "is_marked_unread",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "hidden_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "last_visible_message_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "unread_count",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "last_read_message_seq",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "last_visible_message_seq",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "nickname",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "history_cleared_message_seq",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "is_deleted",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "deleted_at",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "deleted_by_id",
+     "type": "int8",
+     "nullable": true
+    }
+   ]
+  },
+  "user_leave_monthly_balances": {
+   "row_count": 4238,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX uq_user_leave_monthly_balances_user_year_month ON public.user_leave_monthly_balances USING btree (user_id, year, month)",
+    "CREATE UNIQUE INDEX user_leave_monthly_balances_pkey ON public.user_leave_monthly_balances USING btree (id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "year",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "month",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "accrued_days",
+     "type": "numeric",
+     "nullable": false
+    },
+    {
+     "name": "used_days",
+     "type": "numeric",
+     "nullable": false
+    },
+    {
+     "name": "note",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "updated_by_user_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "pending_accrued_days",
+     "type": "numeric",
+     "nullable": false
+    }
+   ]
+  },
+  "attendance_daily_records": {
+   "row_count": 54489,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX attendance_daily_records_pkey ON public.attendance_daily_records USING btree (id)",
+    "CREATE UNIQUE INDEX uq_attendance_daily_records_employee_date ON public.attendance_daily_records USING btree (employee_code, work_date)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "employee_code",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "username",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "full_name",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "work_date",
+     "type": "date",
+     "nullable": false
+    },
+    {
+     "name": "first_check_in",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "last_check_out",
+     "type": "timestamptz",
+     "nullable": true
+    },
+    {
+     "name": "swipe_count",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "first_event_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "last_event_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "status",
+     "type": "varchar",
+     "nullable": false
+    },
+    {
+     "name": "is_late",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "is_early_leave",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "actual_minutes",
+     "type": "int4",
+     "nullable": false
+    },
+    {
+     "name": "metadata",
+     "type": "jsonb",
+     "nullable": false
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": false
+    }
+   ]
+  },
+  "user_contract_histories": {
+   "row_count": 457,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX user_contract_histories_pkey ON public.user_contract_histories USING btree (id)",
+    "CREATE UNIQUE INDEX ux_user_contract_histories_tenant_current ON public.user_contract_histories USING btree (tenant_id, user_id) WHERE (is_current = true)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "user_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "contract_type",
+     "type": "varchar",
+     "nullable": true
+    },
+    {
+     "name": "contract_period_from",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "contract_period_to",
+     "type": "date",
+     "nullable": true
+    },
+    {
+     "name": "is_current",
+     "type": "bool",
+     "nullable": false
+    },
+    {
+     "name": "note",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz",
+     "nullable": false
+    },
+    {
+     "name": "created_by_user_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "updated_by_user_id",
+     "type": "int8",
+     "nullable": true
+    },
+    {
+     "name": "tenant_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  },
+  "project_tags": {
+   "row_count": 20,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX project_tags_pkey ON public.project_tags USING btree (id)",
+    "CREATE UNIQUE INDEX uq_project_tags_name ON public.project_tags USING btree (project_id, name)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "project_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "name",
+     "type": "text",
+     "nullable": false
+    },
+    {
+     "name": "color",
+     "type": "text",
+     "nullable": true
+    },
+    {
+     "name": "created_at",
+     "type": "timestamptz",
+     "nullable": true
+    }
+   ]
+  },
+  "ticket_tags": {
+   "row_count": 96,
+   "primary_key": [
+    "id"
+   ],
+   "foreign_keys": [],
+   "unique_indexes": [
+    "CREATE UNIQUE INDEX ticket_tags_pkey ON public.ticket_tags USING btree (id)",
+    "CREATE UNIQUE INDEX uq_ticket_tags_ticket_tag ON public.ticket_tags USING btree (ticket_id, tag_id)"
+   ],
+   "columns": [
+    {
+     "name": "id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "ticket_id",
+     "type": "int8",
+     "nullable": false
+    },
+    {
+     "name": "tag_id",
+     "type": "int8",
+     "nullable": false
+    }
+   ]
+  }
+ },
+ "tables_with_tenant_id": [
+  "_backup_cleanup_20261005.department_members_deleted",
+  "_backup_cleanup_20261005.tenant_user_memberships_deleted",
+  "_backup_cleanup_20261005.user_contract_histories_deleted",
+  "_backup_cleanup_20261005.user_permissions_deleted",
+  "_backup_cleanup_20261005.user_profiles_deleted",
+  "_backup_cleanup_20261005.user_restore_history_deleted",
+  "_backup_cleanup_20261005.user_role_assignments_deleted",
+  "_backup_cleanup_20261005.user_sessions_deleted",
+  "public.alert_acknowledgements",
+  "public.alert_action_outbox",
+  "public.alert_events",
+  "public.alert_route_destinations",
+  "public.alert_routes",
+  "public.alert_sources",
+  "public.alert_webhook_receipts",
+  "public.business_audit_events",
+  "public.department_members",
+  "public.departments",
+  "public.organization_change_logs",
+  "public.role_permissions",
+  "public.roles",
+  "public.system_logs",
+  "public.tenant_domains",
+  "public.tenant_user_memberships",
+  "public.user_contract_histories",
+  "public.user_department_data_scopes",
+  "public.user_permissions",
+  "public.user_profiles",
+  "public.user_restore_history",
+  "public.user_role_assignments",
+  "public.user_sessions",
+  "public.work_calendar_default_periods",
+  "public.work_calendar_department_assignments",
+  "public.work_calendar_template_day_versions",
+  "public.work_calendar_template_days",
+  "public.work_calendar_templates"
+ ],
+ "missing_candidates": [
+  "tags"
+ ],
+ "related_tables": [
+  "approval_workflow_steps",
+  "approval_workflow_templates",
+  "asset_activity_logs",
+  "asset_assignments",
+  "asset_attachments",
+  "asset_categories",
+  "asset_disposal_ticket_items",
+  "asset_disposal_tickets",
+  "asset_disposals",
+  "asset_inventory_items",
+  "asset_inventory_sessions",
+  "asset_maintenance",
+  "asset_maintenance_ticket_items",
+  "asset_maintenance_tickets",
+  "attendance_daily_records",
+  "audience_department_members",
+  "audience_user_members",
+  "audiences",
+  "chat_audit_log",
+  "chat_conversation_members",
+  "chat_conversations",
+  "chat_group_notes",
+  "chat_message_attachments",
+  "chat_message_hidden_for_users",
+  "chat_message_links",
+  "chat_message_mentions",
+  "chat_message_poll_options",
+  "chat_message_poll_votes",
+  "chat_message_polls",
+  "chat_message_reactions",
+  "chat_messages",
+  "chat_realtime_outbox",
+  "chat_shared_links",
+  "chat_sticker_packs",
+  "chat_stickers",
+  "chat_task_assignees",
+  "chat_tasks",
+  "chat_thread_participants",
+  "chat_threads",
+  "leave_catalog_translations",
+  "leave_catalogs",
+  "leave_policy_settings",
+  "project_members",
+  "talk_post_attachments",
+  "talk_post_comment_attachments",
+  "talk_post_comment_edit_history",
+  "talk_post_comment_reactions",
+  "talk_post_comments",
+  "talk_post_reactions",
+  "talk_post_stats",
+  "talk_post_tags",
+  "talk_posts",
+  "talk_tags",
+  "user_leave_month_end_snapshots",
+  "user_leave_monthly_balances",
+  "user_leave_year_balances"
+ ]
+}

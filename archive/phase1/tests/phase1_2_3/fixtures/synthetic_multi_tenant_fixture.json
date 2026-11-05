@@ -1,0 +1,111 @@
+{
+  "fixture_name": "phase1_2_3_synthetic_multi_tenant_fixture",
+  "description": "Deterministic synthetic multi-tenant dataset (Tenant 1 & Tenant 2) for executing Phase 1.2.3 Q01 output contract & caller authorization (Q01-01..12), Q08 multi-source tenant isolation correction (Q08-01..14), and Circuit Breaker test benchmarks (CB-01..15).",
+  "tenants": [
+    {"id": 1, "tenant_key": "tenant_alpha", "name": "Tenant Alpha", "status": "active", "isolation_mode": "shared", "is_default": true, "is_deleted": false},
+    {"id": 2, "tenant_key": "tenant_beta", "name": "Tenant Beta", "status": "active", "isolation_mode": "shared", "is_default": false, "is_deleted": false}
+  ],
+  "users": [
+    {"id": 101, "username": "alice.t1", "email": "alice@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 102, "username": "bob.suspended", "email": "bob@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 103, "username": "charlie.deleted_mem", "email": "charlie@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 104, "username": "david.multi_active", "email": "david@both.com", "is_active": true, "is_deleted": false},
+    {"id": 105, "username": "eve.t1_active_t2_inactive", "email": "eve@both.com", "is_active": true, "is_deleted": false},
+    {"id": 106, "username": "frank.resigned_single", "email": "frank@alpha.com", "is_active": false, "is_deleted": false},
+    {"id": 107, "username": "ivan.inactive_deleted_mem", "email": "ivan@alpha.com", "is_active": true, "is_deleted": false},
+    {"id": 108, "username": "judy.deleted_user", "email": "judy@alpha.com", "is_active": false, "is_deleted": true},
+    {"id": 201, "username": "grace.t2", "email": "grace@beta.com", "is_active": true, "is_deleted": false},
+    {"id": 202, "username": "heidi.t2_mgr", "email": "heidi@beta.com", "is_active": true, "is_deleted": false}
+  ],
+  "tenant_user_memberships": [
+    {"id": 1, "tenant_id": 1, "user_id": 101, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 2, "tenant_id": 1, "user_id": 102, "status": "suspended", "is_default": true, "is_deleted": false},
+    {"id": 3, "tenant_id": 1, "user_id": 103, "status": "active", "is_default": true, "is_deleted": true},
+    {"id": 4, "tenant_id": 1, "user_id": 104, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 5, "tenant_id": 2, "user_id": 104, "status": "active", "is_default": false, "is_deleted": false},
+    {"id": 6, "tenant_id": 1, "user_id": 105, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 7, "tenant_id": 2, "user_id": 105, "status": "suspended", "is_default": false, "is_deleted": false},
+    {"id": 8, "tenant_id": 1, "user_id": 106, "status": "inactive", "is_default": true, "is_deleted": false},
+    {"id": 9, "tenant_id": 2, "user_id": 201, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 10, "tenant_id": 2, "user_id": 202, "status": "active", "is_default": true, "is_deleted": false},
+    {"id": 11, "tenant_id": 1, "user_id": 107, "status": "inactive", "is_default": true, "is_deleted": true},
+    {"id": 12, "tenant_id": 1, "user_id": 108, "status": "active", "is_default": true, "is_deleted": false}
+  ],
+  "user_profiles": [
+    {"id": 1, "tenant_id": 1, "user_id": 101, "display_name": "Alice Alpha", "employee_number": "EMP-101", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 2, "tenant_id": 1, "user_id": 102, "display_name": "Bob Suspended", "employee_number": "EMP-102", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 3, "tenant_id": 1, "user_id": 103, "display_name": "Charlie DeletedMem", "employee_number": "EMP-103", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 4, "tenant_id": 1, "user_id": 104, "display_name": "David Multi T1", "employee_number": "EMP-104", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 5, "tenant_id": 2, "user_id": 104, "display_name": "David Multi T2", "employee_number": "EMP-104", "department_id": 20, "is_default": false, "is_resigned": false},
+    {"id": 6, "tenant_id": 1, "user_id": 105, "display_name": "Eve T1 Active", "employee_number": "EMP-105", "department_id": 10, "is_default": true, "is_resigned": false},
+    {"id": 7, "tenant_id": 2, "user_id": 105, "display_name": "Eve T2 Suspended", "employee_number": "EMP-105", "department_id": 20, "is_default": false, "is_resigned": false},
+    {"id": 8, "tenant_id": 1, "user_id": 106, "display_name": "Frank Resigned", "employee_number": "EMP-106", "department_id": 10, "is_default": true, "is_resigned": true},
+    {"id": 9, "tenant_id": 2, "user_id": 201, "display_name": "Grace Beta", "employee_number": "EMP-201", "department_id": 20, "is_default": true, "is_resigned": false},
+    {"id": 10, "tenant_id": 2, "user_id": 202, "display_name": "Heidi Beta Mgr", "employee_number": "EMP-202", "department_id": 20, "is_default": true, "is_resigned": false},
+    {"id": 11, "tenant_id": 1, "user_id": 107, "display_name": "Ivan InactiveDeletedMem", "employee_number": "EMP-107", "department_id": 10, "is_default": true, "is_resigned": true},
+    {"id": 12, "tenant_id": 1, "user_id": 108, "display_name": "Judy DeletedUser", "employee_number": "EMP-108", "department_id": 10, "is_default": true, "is_resigned": true}
+  ],
+  "departments": [
+    {"id": 10, "tenant_id": 1, "code": "ENG-T1", "name": "Engineering Alpha (Active Mgr + Active SubDepts)", "parent_id": null, "manager_user_id": 101, "depth": 1, "path": "/10", "department_type": "division", "is_active": true},
+    {"id": 11, "tenant_id": 1, "code": "QA-T1", "name": "QA Alpha (Suspended Mem Mgr)", "parent_id": 10, "manager_user_id": 102, "depth": 2, "path": "/10/11", "department_type": "team", "is_active": true},
+    {"id": 12, "tenant_id": 1, "code": "OPS-T1", "name": "Ops Alpha (Cross-Tenant Mgr)", "parent_id": 10, "manager_user_id": 202, "depth": 2, "path": "/10/12", "department_type": "team", "is_active": true},
+    {"id": 13, "tenant_id": 1, "code": "FIN-T1", "name": "Finance Alpha (Inactive User/Mem Mgr)", "parent_id": 10, "manager_user_id": 106, "depth": 2, "path": "/10/13", "department_type": "team", "is_active": true},
+    {"id": 14, "tenant_id": 1, "code": "HR-T1", "name": "HR Alpha (Deleted User Mgr)", "parent_id": 10, "manager_user_id": 108, "depth": 2, "path": "/10/14", "department_type": "team", "is_active": true},
+    {"id": 15, "tenant_id": 1, "code": "LEG-T1", "name": "Legal Alpha (Deleted Mem Mgr)", "parent_id": 10, "manager_user_id": 103, "depth": 2, "path": "/10/15", "department_type": "team", "is_active": true},
+    {"id": 16, "tenant_id": 1, "code": "EMPTY-T1", "name": "Empty Alpha (0 Sub, 0 Employees)", "parent_id": null, "manager_user_id": 101, "depth": 1, "path": "/16", "department_type": "division", "is_active": true},
+    {"id": 17, "tenant_id": 1, "code": "LEAF-T1", "name": "Leaf Alpha (0 Sub, Has Employees)", "parent_id": null, "manager_user_id": 101, "depth": 1, "path": "/17", "department_type": "division", "is_active": true},
+    {"id": 20, "tenant_id": 2, "code": "ENG-T2", "name": "Engineering Beta", "parent_id": null, "manager_user_id": 202, "depth": 1, "path": "/20", "department_type": "division", "is_active": true},
+    {"id": 21, "tenant_id": 2, "code": "QA-T2", "name": "QA Beta", "parent_id": 20, "manager_user_id": 202, "depth": 2, "path": "/20/21", "department_type": "team", "is_active": true}
+  ],
+  "department_members": [
+    {"id": 1, "tenant_id": 1, "department_id": 10, "user_id": 101, "role_in_department": "manager", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 2, "tenant_id": 1, "department_id": 10, "user_id": 105, "role_in_department": "member", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 3, "tenant_id": 1, "department_id": 10, "user_id": 104, "role_in_department": "member", "is_primary": false, "effective_from": "2024-01-01", "effective_to": "2024-12-31"},
+    {"id": 4, "tenant_id": 1, "department_id": 10, "user_id": 102, "role_in_department": "member", "is_primary": false, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 5, "tenant_id": 1, "department_id": 17, "user_id": 101, "role_in_department": "manager", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 6, "tenant_id": 2, "department_id": 20, "user_id": 201, "role_in_department": "member", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null},
+    {"id": 7, "tenant_id": 2, "department_id": 20, "user_id": 202, "role_in_department": "manager", "is_primary": true, "effective_from": "2025-01-01", "effective_to": null}
+  ],
+  "audiences": [
+    {"id": 1, "code": "SYSTEM_ALL", "name": "All Company", "audience_type": "ALL", "is_system": true, "owner_user_id": null, "is_active": true},
+    {"id": 2, "code": "AUD_T1_PURE", "name": "T1 Pure Custom Audience", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 101, "is_active": true},
+    {"id": 3, "code": "AUD_T2_PURE", "name": "T2 Pure Custom Audience", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 202, "is_active": true},
+    {"id": 4, "code": "AUD_VULN_T1_OWNER_T1_USER_T2_DEPT", "name": "Vuln: Owner T1, User T1, Dept T2", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 101, "is_active": true},
+    {"id": 5, "code": "AUD_VULN_T1_OWNER_T2_USER_T1_DEPT", "name": "Vuln: Owner T1, User T2, Dept T1", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 101, "is_active": true},
+    {"id": 6, "code": "AUD_VULN_T2_OWNER_T1_USER_T1_DEPT", "name": "Vuln: Owner T2, User T1, Dept T1", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 202, "is_active": true},
+    {"id": 7, "code": "AUD_AMBIG_OWNER", "name": "Ambig Owner (T1 & T2 active)", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 104, "is_active": true},
+    {"id": 8, "code": "AUD_AMBIG_USER_MEM", "name": "Ambig User Member (T1 & T2 active)", "audience_type": "CUSTOM", "is_system": false, "owner_user_id": 101, "is_active": true}
+  ],
+  "audience_department_members": [
+    {"id": 1, "audience_id": 2, "department_id": 10},
+    {"id": 2, "audience_id": 2, "department_id": 11},
+    {"id": 3, "audience_id": 3, "department_id": 20},
+    {"id": 4, "audience_id": 4, "department_id": 20},
+    {"id": 5, "audience_id": 5, "department_id": 10},
+    {"id": 6, "audience_id": 6, "department_id": 10},
+    {"id": 7, "audience_id": 7, "department_id": 10},
+    {"id": 8, "audience_id": 8, "department_id": 10}
+  ],
+  "audience_user_members": [
+    {"id": 1, "audience_id": 2, "user_id": 105},
+    {"id": 2, "audience_id": 3, "user_id": 201},
+    {"id": 3, "audience_id": 4, "user_id": 105},
+    {"id": 4, "audience_id": 5, "user_id": 201},
+    {"id": 5, "audience_id": 6, "user_id": 105},
+    {"id": 6, "audience_id": 7, "user_id": 101},
+    {"id": 7, "audience_id": 8, "user_id": 104}
+  ],
+  "notices": [
+    {"id": 901, "title": "T1 System All Notice", "notice_type": "general", "priority": "high", "audience_id": 1, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T08:00:00Z", "is_deleted": false},
+    {"id": 902, "title": "T2 System All Notice", "notice_type": "general", "priority": "high", "audience_id": 1, "created_by_user_id": 202, "is_published": true, "published_at": "2026-10-03T08:30:00Z", "is_deleted": false},
+    {"id": 903, "title": "T1 Pure Custom Notice", "notice_type": "dept", "priority": "normal", "audience_id": 2, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T09:00:00Z", "is_deleted": false},
+    {"id": 904, "title": "T2 Pure Custom Notice", "notice_type": "dept", "priority": "normal", "audience_id": 3, "created_by_user_id": 202, "is_published": true, "published_at": "2026-10-03T09:30:00Z", "is_deleted": false},
+    {"id": 905, "title": "Notice Vuln Dept T2", "notice_type": "dept", "priority": "normal", "audience_id": 4, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T10:00:00Z", "is_deleted": false},
+    {"id": 906, "title": "Notice Vuln User T2", "notice_type": "dept", "priority": "normal", "audience_id": 5, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T10:30:00Z", "is_deleted": false},
+    {"id": 907, "title": "Notice Vuln Owner T2", "notice_type": "dept", "priority": "normal", "audience_id": 6, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T11:00:00Z", "is_deleted": false},
+    {"id": 908, "title": "Notice Ambig Owner", "notice_type": "dept", "priority": "normal", "audience_id": 7, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T11:30:00Z", "is_deleted": false},
+    {"id": 909, "title": "Notice Ambig User Mem", "notice_type": "dept", "priority": "normal", "audience_id": 8, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T12:00:00Z", "is_deleted": false},
+    {"id": 910, "title": "Notice Unpublished", "notice_type": "dept", "priority": "normal", "audience_id": 2, "created_by_user_id": 101, "is_published": false, "published_at": "2026-10-03T12:30:00Z", "is_deleted": false},
+    {"id": 911, "title": "Notice Soft Deleted", "notice_type": "dept", "priority": "normal", "audience_id": 2, "created_by_user_id": 101, "is_published": true, "published_at": "2026-10-03T13:00:00Z", "is_deleted": true}
+  ]
+}

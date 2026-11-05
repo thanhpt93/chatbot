@@ -1,0 +1,52 @@
+{
+  "expected_attendance_resolution": {
+    "1001": {"status": "RESOLVED_BY_USER_ID", "loaded_to_neo4j": true, "tenant_id": 1, "resolved_user_id": 101},
+    "1002": {"status": "INVALID_TENANT", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1003": {"status": "INVALID_TENANT", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1004": {"status": "INVALID_TENANT", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1005": {"status": "INVALID_TENANT", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1006": {"status": "RESOLVED_BY_EMPLOYEE_NUMBER", "loaded_to_neo4j": true, "tenant_id": 1, "resolved_user_id": 105},
+    "1007": {"status": "UNRESOLVED", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1008": {"status": "UNRESOLVED", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1009": {"status": "UNRESOLVED", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1010": {"status": "UNRESOLVED", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null},
+    "1011": {"status": "AMBIGUOUS", "loaded_to_neo4j": false, "tenant_id": null, "resolved_user_id": null}
+  },
+  "expected_leave_balance_resolution": {
+    "501": {"loaded_to_neo4j": true, "tenant_id": 1, "user_id": 101, "quarantine_reason": null},
+    "502": {"loaded_to_neo4j": true, "tenant_id": 1, "user_id": 106, "quarantine_reason": null},
+    "503": {"loaded_to_neo4j": false, "tenant_id": null, "user_id": 104, "quarantine_reason": "AMBIGUOUS_TENANT"},
+    "504": {"loaded_to_neo4j": false, "tenant_id": null, "user_id": 105, "quarantine_reason": "AMBIGUOUS_TENANT"}
+  },
+  "expected_department_managers_t1": {
+    "10": {"manager_id": 101, "manager_name": "Alice Alpha"},
+    "11": {"manager_id": null, "manager_name": null},
+    "12": {"manager_id": null, "manager_name": null},
+    "13": {"manager_id": null, "manager_name": null},
+    "14": {"manager_id": null, "manager_name": null},
+    "15": {"manager_id": null, "manager_name": null}
+  },
+  "expected_q05_t1_user101": [
+    {"request_id": 701, "code": "APR-T1-01", "request_type": "leave", "title": "T1 Leave Request", "sequence_order": 1}
+  ],
+  "expected_q05_t1_user104": [
+    {"request_id": 701, "code": "APR-T1-01", "request_type": "leave", "title": "T1 Leave Request", "sequence_order": 2}
+  ],
+  "expected_q05_t2_user104": [
+    {"request_id": 702, "code": "APR-T2-01", "request_type": "leave", "title": "T2 Leave Request", "sequence_order": 3}
+  ],
+  "expected_q05_t1_user102_suspended": [],
+  "expected_q08_t1_user101": [
+    {"notice_id": 902, "title": "T1 Custom Eng Notice", "audience_type": "CUSTOM"},
+    {"notice_id": 901, "title": "T1 System All Notice", "audience_type": "ALL"}
+  ],
+  "expected_q08_t2_user201": [
+    {"notice_id": 903, "title": "T2 System All Notice (Must NOT leak to T1)", "audience_type": "ALL"}
+  ],
+  "expected_q08_t1_user102_suspended": [],
+  "expected_tag_reconciliation_keys": [
+    "project:1",
+    "project:2",
+    "talk:1"
+  ]
+}

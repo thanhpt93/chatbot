@@ -1,0 +1,51 @@
+# =======================================================
+# Large Files (> 20MB) & Database Raw Dumps
+# =======================================================
+.pgdata/
+*.dump
+*.dump.*
+*.dump.gz
+*.sql.gz
+*.tar.gz
+*.bak
+*.backup
+
+# Database raw dump directory
+database/*.dump*
+database/*.gz
+
+# Vector DB physical local storage (prevents large vector index files)
+data/qdrant_storage/
+
+# Model weights & large binary checkpoints (> 20MB)
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.onnx
+
+# =======================================================
+# Python Bytecode, Caches & Environments
+# =======================================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# =======================================================
+# Logs & Temporary Files
+# =======================================================
+*.log
+*.tmp
+*.temp
+
+# =======================================================
+# IDE & Operating System Metadata
+# =======================================================
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

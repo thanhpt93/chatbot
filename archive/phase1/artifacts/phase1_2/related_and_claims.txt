@@ -1,0 +1,125 @@
+﻿## approval_workflow_steps rows=27 pk=['id']
+  cols: id:int8!, template_id:int8!, participant_role:varchar!, step_order:int4!, assignee_type:varchar!, assignee_value:text!, is_required:bool!, created_at:timestamptz, updated_at:timestamptz
+  UQ: approval_workflow_steps_pkey (id)
+  UQ: approval_workflow_steps_template_id_participant_role_step_o_key (template_id, participant_role, step_order)
+## audience_user_members rows=39 pk=['id']
+  cols: id:int8!, audience_id:int4!, user_id:int4!, created_at:timestamptz
+  UQ: audience_user_members_audience_id_user_id_key (audience_id, user_id)
+  UQ: audience_user_members_pkey (id)
+## audience_department_members rows=100 pk=['id']
+  cols: id:int4!, audience_id:int4!, department_id:int4!, created_at:timestamptz
+  UQ: audience_department_members_audience_id_department_id_key (audience_id, department_id)
+  UQ: audience_department_members_pkey (id)
+## talk_post_tags rows=51 pk=[]
+  cols: post_id:int8!, tag_id:int8!, created_at:timestamptz!
+  UQ: uq_talk_post_tags_post_tag (post_id, tag_id)
+## talk_tags rows=10 pk=['id']
+  cols: id:int8!, name:varchar!, created_at:timestamptz!
+  UQ: talk_tags_pkey (id)
+  UQ: uq_talk_tags_name (name)
+## asset_assignments rows=1147 pk=['id']
+  cols: id:int8!, asset_id:int8!, assignment_type:varchar!, from_user_id:int4, from_department_id:int4, to_user_id:int4, to_department_id:int4, assigned_date:date!, return_date:date, actual_return_date:date, reason:text, note:text, approval_request_id:int8, status:varchar, created_by_user_id:int4!, created_at:timestamptz, ticket_code:varchar!
+  UQ: asset_assignments_pkey (id)
+## tenant_domains rows=0 pk=['id']
+  cols: id:int8!, tenant_id:int8!, host:varchar!, is_primary:bool!, is_verified:bool!, created_by_id:int8, updated_by_id:int8, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: tenant_domains_pkey (id)
+  UQ: ux_tenant_domains_active_host (lower((host)::text)) WHERE (is_deleted = false)
+  UQ: ux_tenant_domains_primary_per_tenant (tenant_id) WHERE ((is_primary = true) AND (is_deleted = false))
+## user_department_data_scopes rows=3 pk=['id']
+  cols: id:int8!, tenant_id:int8!, user_id:int8!, permission_code:varchar!, department_id:int8!, include_descendants:bool!, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8, created_by_id:int8, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: user_department_data_scopes_pkey (id)
+  UQ: uq_user_department_data_scopes_active (tenant_id, user_id, permission_code, department_id) WHERE (is_deleted = false)
+## user_leave_year_balances rows=353 pk=['id']
+  cols: id:int8!, user_id:int8!, year:int4!, opening_days:numeric!, carryover_days:numeric!, seniority_days:numeric!, manual_adjustment_days:numeric!, note:text, updated_by_user_id:int8, created_at:timestamptz!, updated_at:timestamptz!, remaining_days:numeric!, carryover_granted_days:numeric!, carryover_used_before_reset_days:numeric!, carryover_expired_days:numeric!, carryover_available_days:numeric!
+  UQ: uq_user_leave_year_balances_user_year (user_id, year)
+  UQ: user_leave_year_balances_pkey (id)
+## leave_catalogs rows=22 pk=['id']
+  cols: id:int4!, code:varchar!, name:varchar!, parent_id:int4, sort_order:int4!, description:text, is_active:bool!, created_at:timestamptz!, updated_at:timestamptz!, is_system:bool!, max_requests_per_year:int4, max_days_per_year:numeric
+  UQ: leave_catalogs_pkey (id)
+  UQ: uq_leave_catalogs_code (code)
+## chat_messages rows=6108 pk=['id']
+  cols: id:int8!, conversation_id:int8!, sender_user_id:int4!, content:text!, created_at:timestamptz, forwarded_from_message_id:int8, edited_at:timestamptz, pinned_by_user_id:int8, pinned_at:timestamp, recalled_by_user_id:int8, recalled_at:timestamptz, message_seq:int8, is_system:bool!, message_type:varchar!, sticker_id:int8, metadata:jsonb!
+  UQ: chat_messages_pkey (id)
+  UQ: uq_chat_messages_alert_action (((metadata ->> 'alert_action_id'::text))) WHERE (((message_type)::text = 'ALERT'::text) AND (is_system = true) AND (metadata ? 'alert_action_id'::text))
+  UQ: uq_chat_messages_conversation_seq (conversation_id, message_seq)
+## chat_threads rows=2 pk=['id']
+  cols: id:int8!, conversation_id:int8!, root_message_id:int8!, reply_count:int8!, last_reply_message_id:int8, last_reply_at:timestamptz, created_by_id:int8!, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: chat_threads_pkey (id)
+  UQ: uq_chat_threads_root (root_message_id) WHERE (is_deleted = false)
+## chat_thread_participants rows=6 pk=['id']
+  cols: id:int8!, thread_id:int8!, user_id:int8!, last_read_message_id:int8, last_read_at:timestamptz, unread_count:int4!, is_following:bool!, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: chat_thread_participants_pkey (id)
+  UQ: uq_chat_thread_participants_active (thread_id, user_id) WHERE (is_deleted = false)
+
+=== CLAIM CHECKS ===
+telemetry_events exists: False
+system_logs: rows=729544
+error_tracking_outbox: rows=201186
+attendance_face_events: rows=1415
+chat_audit_log: rows=23021
+compensation-like columns anywhere: ['public.attendance_allowances.allowance_type', 'public.attendance_policy_assignments.credited_bonus_hours']
+base tables without PK (19): ['_backup_cleanup_20261005.audience_user_members_deleted', '_backup_cleanup_20261005.bot_threads_deleted', '_backup_cleanup_20261005.department_members_deleted', '_backup_cleanup_20261005.mail_send_logs_deleted', '_backup_cleanup_20261005.notice_reads_deleted', '_backup_cleanup_20261005.notification_recipients_deleted', '_backup_cleanup_20261005.tenant_user_memberships_deleted', '_backup_cleanup_20261005.user_contract_histories_deleted', '_backup_cleanup_20261005.user_leave_month_end_snapshots_deleted', '_backup_cleanup_20261005.user_leave_monthly_balances_deleted', '_backup_cleanup_20261005.user_leave_year_balances_deleted', '_backup_cleanup_20261005.user_permissions_deleted', '_backup_cleanup_20261005.user_profiles_deleted', '_backup_cleanup_20261005.user_restore_history_deleted', '_backup_cleanup_20261005.user_role_assignments_deleted', '_backup_cleanup_20261005.user_sessions_deleted', '_backup_cleanup_20261005.users_deleted', 'hangfire.lock', 'public.talk_post_tags']
+explicit FKs: [('hangfire.jobparameter', [{'column_name': 'jobid', 'foreign_table_schema': 'hangfire', 'foreign_table_name': 'job', 'foreign_column_name': 'id', 'constraint_name': 'jobparameter_jobid_fkey'}]), ('hangfire.state', [{'column_name': 'jobid', 'foreign_table_schema': 'hangfire', 'foreign_table_name': 'job', 'foreign_column_name': 'id', 'constraint_name': 'state_jobid_fkey'}])]
+DB version: PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+triggers: 16 routines: 84
+  routine: armor
+  routine: armor
+  routine: check_user_permission
+  routine: check_user_permission
+  routine: crypt
+  routine: dearmor
+  routine: decrypt
+  routine: decrypt_iv
+  routine: digest
+  routine: digest
+  routine: encrypt
+  routine: encrypt_iv
+  routine: fips_mode
+  routine: gen_random_bytes
+  routine: gen_random_uuid
+  routine: gen_salt
+  routine: gen_salt
+  routine: generate_ticket_code
+  routine: get_user_menu_actions
+  routine: get_user_menus
+  routine: gin_extract_query_trgm
+  routine: gin_extract_value_trgm
+  routine: gin_trgm_consistent
+  routine: gin_trgm_triconsistent
+  routine: gtrgm_compress
+  routine: gtrgm_consistent
+  routine: gtrgm_decompress
+  routine: gtrgm_distance
+  routine: gtrgm_in
+  routine: gtrgm_options
+  routine: gtrgm_out
+  routine: gtrgm_penalty
+  routine: gtrgm_picksplit
+  routine: gtrgm_same
+  routine: gtrgm_union
+  routine: hmac
+  routine: hmac
+  routine: immutable_strip_html
+  routine: immutable_unaccent
+  routine: pgp_armor_headers
+  routine: pgp_key_id
+  routine: pgp_pub_decrypt
+  routine: pgp_pub_decrypt
+  routine: pgp_pub_decrypt
+  routine: pgp_pub_decrypt_bytea
+  routine: pgp_pub_decrypt_bytea
+  routine: pgp_pub_decrypt_bytea
+  routine: pgp_pub_encrypt
+  routine: pgp_pub_encrypt
+  routine: pgp_pub_encrypt_bytea
+  routine: pgp_pub_encrypt_bytea
+  routine: pgp_sym_decrypt
+  routine: pgp_sym_decrypt
+  routine: pgp_sym_decrypt_bytea
+  routine: pgp_sym_decrypt_bytea
+  routine: pgp_sym_encrypt
+  routine: pgp_sym_encrypt
+  routine: pgp_sym_encrypt_bytea
+  routine: pgp_sym_encrypt_bytea
+  routine: refresh_project_performance_counters
+PII/secret-like columns in public: ['alert_sources.secret_ciphertext', 'attendance_face_start_audits.ip_address', 'attendance_logs.ip_address', 'chat_audit_log.ip_address', 'license_runtime_states.signed_token', 'license_runtime_states.token_digest', 'login_qr_challenges.secret_hash', 'login_qr_challenges.requested_ip_address', 'login_qr_challenges.approved_ip_address', 'notification_device_registrations.push_token', 'system_logs.ip_address', 'user_profiles.birth_date', 'user_profiles.mobile_phone', 'user_profiles.address', 'user_profiles.tax_code', 'user_sessions.refresh_token_hash', 'user_sessions.ip_address', 'user_sessions.public_ip_address', 'users.password_hash', 'users.email_verification_token']

@@ -1,0 +1,580 @@
+{
+  "tenants": [
+    {
+      "id": 1,
+      "tenant_key": "legacy-default",
+      "name": "IQ NFFICE",
+      "status": "active",
+      "isolation_mode": "pooled",
+      "is_default": true,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "is_deleted": false,
+      "deleted_at": null,
+      "deleted_by_id": null,
+      "created_at": "2026-07-18 14:20:48.372281+07:00",
+      "updated_at": "2026-07-18 14:20:48.372281+07:00"
+    }
+  ],
+  "tables_with_tenant_id": [
+    "alert_acknowledgements",
+    "alert_action_outbox",
+    "alert_events",
+    "alert_route_destinations",
+    "alert_routes",
+    "alert_sources",
+    "alert_webhook_receipts",
+    "business_audit_events",
+    "department_members",
+    "departments",
+    "organization_change_logs",
+    "role_permissions",
+    "roles",
+    "system_logs",
+    "tenant_domains",
+    "tenant_user_memberships",
+    "user_contract_histories",
+    "user_department_data_scopes",
+    "user_permissions",
+    "user_profiles",
+    "user_restore_history",
+    "user_role_assignments",
+    "user_sessions",
+    "work_calendar_default_periods",
+    "work_calendar_department_assignments",
+    "work_calendar_template_day_versions",
+    "work_calendar_template_days",
+    "work_calendar_templates"
+  ],
+  "tenant_id_distributions": {
+    "alert_acknowledgements": {},
+    "alert_action_outbox": {
+      "1": 85
+    },
+    "alert_events": {
+      "1": 29
+    },
+    "alert_route_destinations": {
+      "1": 10
+    },
+    "alert_routes": {
+      "1": 2
+    },
+    "alert_sources": {
+      "1": 3
+    },
+    "alert_webhook_receipts": {
+      "1": 58
+    },
+    "business_audit_events": {},
+    "department_members": {
+      "1": 397
+    },
+    "departments": {
+      "1": 103
+    },
+    "organization_change_logs": {
+      "1": 129
+    },
+    "role_permissions": {
+      "1": 1535
+    },
+    "roles": {
+      "1": 42
+    },
+    "system_logs": {
+      "None": 729544
+    },
+    "tenant_domains": {},
+    "tenant_user_memberships": {
+      "1": 360
+    },
+    "user_contract_histories": {
+      "1": 457
+    },
+    "user_department_data_scopes": {
+      "1": 3
+    },
+    "user_permissions": {
+      "1": 51
+    },
+    "user_profiles": {
+      "1": 360
+    }
+  },
+  "users_has_tenant_id": false,
+  "tenant_user_memberships_stats": {
+    "count": 1
+  },
+  "roles_count": 42,
+  "permissions_count": 247,
+  "role_permissions_count": 1535,
+  "user_role_assignments_count": 448,
+  "user_permissions_count": 51,
+  "user_permissions_breakdown": [
+    {
+      "is_granted": false,
+      "count": 32
+    },
+    {
+      "is_granted": true,
+      "count": 19
+    }
+  ],
+  "user_department_data_scopes": [
+    {
+      "id": 1,
+      "tenant_id": 1,
+      "user_id": 56,
+      "permission_code": "menu.management-attendance.view",
+      "department_id": 58,
+      "include_descendants": true,
+      "is_deleted": true,
+      "deleted_at": "2026-10-01 14:23:20.331812+07:00",
+      "deleted_by_id": 165,
+      "created_by_id": 1,
+      "created_at": "2026-10-01 14:17:10.030681+07:00",
+      "updated_at": "2026-10-01 14:23:20.331812+07:00"
+    },
+    {
+      "id": 2,
+      "tenant_id": 1,
+      "user_id": 56,
+      "permission_code": "menu.management-attendance.view",
+      "department_id": 58,
+      "include_descendants": true,
+      "is_deleted": true,
+      "deleted_at": "2026-10-01 14:48:34.611438+07:00",
+      "deleted_by_id": 165,
+      "created_by_id": 165,
+      "created_at": "2026-10-01 14:23:20.331812+07:00",
+      "updated_at": "2026-10-01 14:48:34.611438+07:00"
+    },
+    {
+      "id": 3,
+      "tenant_id": 1,
+      "user_id": 56,
+      "permission_code": "menu.management-attendance.view",
+      "department_id": 58,
+      "include_descendants": true,
+      "is_deleted": false,
+      "deleted_at": null,
+      "deleted_by_id": null,
+      "created_by_id": 165,
+      "created_at": "2026-10-01 14:48:34.611438+07:00",
+      "updated_at": "2026-10-01 14:48:34.611438+07:00"
+    }
+  ],
+  "department_hierarchy": {
+    "total_depts": 103,
+    "root_depts": 53,
+    "child_depts": 50,
+    "max_depth": 4
+  },
+  "ticket_hierarchy": {
+    "total_tickets": 668,
+    "root_tickets": 534,
+    "child_tickets": 134
+  },
+  "ticket_comments_hierarchy": {
+    "total_comments": 40,
+    "root_comments": 40,
+    "reply_comments": 0
+  },
+  "menu_hierarchy": {
+    "total_menus": 77,
+    "root_menus": 14,
+    "sub_menus": 63
+  },
+  "talk_post_comments_hierarchy": {
+    "total_talk_comments": 165,
+    "root_comments": 106,
+    "reply_comments": 59
+  },
+  "ticket_status_dist": [
+    {
+      "status": "create",
+      "count": 668
+    }
+  ],
+  "kanban_sample": [
+    {
+      "id": 5,
+      "project_id": 10,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 1
+    },
+    {
+      "id": 6,
+      "project_id": 10,
+      "title": "In Progress",
+      "status_group": "in_process",
+      "position": 1,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 7,
+      "project_id": 10,
+      "title": "Review",
+      "status_group": "in_process",
+      "position": 2,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 8,
+      "project_id": 10,
+      "title": "Done",
+      "status_group": "completed",
+      "position": 3,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 9,
+      "project_id": 11,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 1
+    },
+    {
+      "id": 10,
+      "project_id": 11,
+      "title": "In Progress",
+      "status_group": "in_process",
+      "position": 1,
+      "is_default": false,
+      "ticket_count": 1
+    },
+    {
+      "id": 11,
+      "project_id": 11,
+      "title": "Review",
+      "status_group": "in_process",
+      "position": 2,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 12,
+      "project_id": 11,
+      "title": "Done",
+      "status_group": "completed",
+      "position": 3,
+      "is_default": false,
+      "ticket_count": 2
+    },
+    {
+      "id": 13,
+      "project_id": 12,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 0
+    },
+    {
+      "id": 14,
+      "project_id": 12,
+      "title": "In Progress",
+      "status_group": "in_process",
+      "position": 1,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 15,
+      "project_id": 12,
+      "title": "Review",
+      "status_group": "in_process",
+      "position": 2,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 16,
+      "project_id": 12,
+      "title": "Done",
+      "status_group": "completed",
+      "position": 3,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 17,
+      "project_id": 13,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 2
+    },
+    {
+      "id": 18,
+      "project_id": 13,
+      "title": "In Progress",
+      "status_group": "in_process",
+      "position": 1,
+      "is_default": false,
+      "ticket_count": 1
+    },
+    {
+      "id": 19,
+      "project_id": 13,
+      "title": "Review",
+      "status_group": "in_process",
+      "position": 2,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 20,
+      "project_id": 13,
+      "title": "Done",
+      "status_group": "completed",
+      "position": 3,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 21,
+      "project_id": 14,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 0
+    },
+    {
+      "id": 22,
+      "project_id": 14,
+      "title": "In Progress",
+      "status_group": "in_process",
+      "position": 1,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 23,
+      "project_id": 14,
+      "title": "Review",
+      "status_group": "in_process",
+      "position": 2,
+      "is_default": false,
+      "ticket_count": 1
+    },
+    {
+      "id": 24,
+      "project_id": 14,
+      "title": "Done",
+      "status_group": "completed",
+      "position": 3,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 54,
+      "project_id": 47,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 1
+    },
+    {
+      "id": 55,
+      "project_id": 47,
+      "title": "In Progress",
+      "status_group": "in_process",
+      "position": 1,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 56,
+      "project_id": 47,
+      "title": "Review",
+      "status_group": "in_process",
+      "position": 2,
+      "is_default": false,
+      "ticket_count": 0
+    },
+    {
+      "id": 57,
+      "project_id": 47,
+      "title": "Done",
+      "status_group": "completed",
+      "position": 3,
+      "is_default": false,
+      "ticket_count": 3
+    },
+    {
+      "id": 58,
+      "project_id": 48,
+      "title": "Create",
+      "status_group": "todo",
+      "position": 0,
+      "is_default": true,
+      "ticket_count": 0
+    }
+  ],
+  "kanban_status_groups": [
+    {
+      "status_group": "in_process",
+      "column_count": 128
+    },
+    {
+      "status_group": "completed",
+      "column_count": 70
+    },
+    {
+      "status_group": "todo",
+      "column_count": 70
+    }
+  ],
+  "tickets_completion_stats": {
+    "total_tickets": 668,
+    "completed_at_not_null": 252,
+    "completed_at_null": 416
+  },
+  "ingest_events_cnt": 143255,
+  "ingest_backups_cnt": 176971,
+  "daily_records_cnt": 54489,
+  "face_events_cnt": 1415,
+  "attendance_logs_cnt": 106,
+  "daily_records_sample": [
+    {
+      "user_id": 1,
+      "work_date": "2026-04-21",
+      "first_check_in": "2026-04-21 08:03:21+07:00",
+      "last_check_out": "2026-04-21 08:03:21+07:00",
+      "actual_minutes": 0,
+      "status": "present",
+      "is_late": false,
+      "is_early_leave": false
+    },
+    {
+      "user_id": null,
+      "work_date": "2026-01-01",
+      "first_check_in": "2026-01-01 05:57:49.982096+07:00",
+      "last_check_out": "2026-01-01 05:57:49.982096+07:00",
+      "actual_minutes": 0,
+      "status": "present",
+      "is_late": false,
+      "is_early_leave": false
+    },
+    {
+      "user_id": 217,
+      "work_date": "2026-01-04",
+      "first_check_in": "2026-01-04 08:20:03.322748+07:00",
+      "last_check_out": "2026-01-04 17:47:16.839487+07:00",
+      "actual_minutes": 567,
+      "status": "present",
+      "is_late": false,
+      "is_early_leave": false
+    },
+    {
+      "user_id": 290,
+      "work_date": "2026-01-05",
+      "first_check_in": "2026-01-05 07:38:20.173299+07:00",
+      "last_check_out": "2026-01-05 14:56:50.686546+07:00",
+      "actual_minutes": 438,
+      "status": "present",
+      "is_late": false,
+      "is_early_leave": false
+    },
+    {
+      "user_id": null,
+      "work_date": "2026-01-04",
+      "first_check_in": "2026-01-04 02:50:17.380521+07:00",
+      "last_check_out": "2026-01-04 18:03:15.035065+07:00",
+      "actual_minutes": 912,
+      "status": "present",
+      "is_late": false,
+      "is_early_leave": false
+    }
+  ],
+  "pii_columns": {
+    "users": [
+      "id (integer)",
+      "username (character varying)",
+      "email (character varying)",
+      "password_hash (character varying)",
+      "created_at (timestamp with time zone)",
+      "updated_at (timestamp with time zone)",
+      "last_login (timestamp with time zone)",
+      "is_active (boolean)",
+      "email_verified (boolean)",
+      "email_verification_token (character varying)",
+      "email_verification_expires_at (timestamp with time zone)",
+      "is_deleted (boolean)",
+      "deleted_at (timestamp with time zone)",
+      "edited_by_id (bigint)",
+      "restored_at (timestamp with time zone)"
+    ],
+    "user_profiles": [
+      "id (integer)",
+      "user_id (integer)",
+      "display_name (character varying)",
+      "avatar_url (text)",
+      "birth_date (date)",
+      "mobile_phone (character varying)",
+      "office_phone (character varying)",
+      "fax_number (character varying)",
+      "employee_number (character varying)",
+      "department_id (integer)",
+      "grade (character varying)",
+      "duty (character varying)",
+      "joining_date (date)",
+      "locale (character varying)",
+      "timezone (character varying)",
+      "created_at (timestamp with time zone)",
+      "updated_at (timestamp with time zone)",
+      "bio (text)",
+      "address (text)",
+      "social_links (jsonb)",
+      "cover_image_url (text)",
+      "eng_name (character varying)",
+      "gender (character varying)",
+      "section (character varying)",
+      "contract_type (character varying)",
+      "contract_period_from (date)",
+      "contract_period_to (date)",
+      "position (character varying)",
+      "is_resigned (boolean)",
+      "resigned_at (timestamp with time zone)",
+      "attendance_mode (character varying)",
+      "tenant_id (bigint)",
+      "tax_code (character varying)"
+    ],
+    "attendance_face_events": [
+      "id (bigint)",
+      "session_id (character varying)",
+      "seq (integer)",
+      "event_type (character varying)",
+      "event_code (character varying)",
+      "message (text)",
+      "created_at (timestamp with time zone)"
+    ],
+    "user_contract_histories": [
+      "id (bigint)",
+      "user_id (bigint)",
+      "contract_type (character varying)",
+      "contract_period_from (date)",
+      "contract_period_to (date)",
+      "is_current (boolean)",
+      "note (text)",
+      "created_at (timestamp with time zone)",
+      "updated_at (timestamp with time zone)",
+      "created_by_user_id (bigint)",
+      "updated_by_user_id (bigint)",
+      "tenant_id (bigint)"
+    ]
+  }
+}

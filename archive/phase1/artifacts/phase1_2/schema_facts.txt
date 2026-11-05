@@ -1,0 +1,183 @@
+﻿DB version: PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+MISSING candidates: ['tags']
+Tables with tenant_id (36): _backup_cleanup_20261005.department_members_deleted, _backup_cleanup_20261005.tenant_user_memberships_deleted, _backup_cleanup_20261005.user_contract_histories_deleted, _backup_cleanup_20261005.user_permissions_deleted, _backup_cleanup_20261005.user_profiles_deleted, _backup_cleanup_20261005.user_restore_history_deleted, _backup_cleanup_20261005.user_role_assignments_deleted, _backup_cleanup_20261005.user_sessions_deleted, public.alert_acknowledgements, public.alert_action_outbox, public.alert_events, public.alert_route_destinations, public.alert_routes, public.alert_sources, public.alert_webhook_receipts, public.business_audit_events, public.department_members, public.departments, public.organization_change_logs, public.role_permissions, public.roles, public.system_logs, public.tenant_domains, public.tenant_user_memberships, public.user_contract_histories, public.user_department_data_scopes, public.user_permissions, public.user_profiles, public.user_restore_history, public.user_role_assignments, public.user_sessions, public.work_calendar_default_periods, public.work_calendar_department_assignments, public.work_calendar_template_day_versions, public.work_calendar_template_days, public.work_calendar_templates
+Related tables: approval_workflow_steps, approval_workflow_templates, asset_activity_logs, asset_assignments, asset_attachments, asset_categories, asset_disposal_ticket_items, asset_disposal_tickets, asset_disposals, asset_inventory_items, asset_inventory_sessions, asset_maintenance, asset_maintenance_ticket_items, asset_maintenance_tickets, attendance_daily_records, audience_department_members, audience_user_members, audiences, chat_audit_log, chat_conversation_members, chat_conversations, chat_group_notes, chat_message_attachments, chat_message_hidden_for_users, chat_message_links, chat_message_mentions, chat_message_poll_options, chat_message_poll_votes, chat_message_polls, chat_message_reactions, chat_messages, chat_realtime_outbox, chat_shared_links, chat_sticker_packs, chat_stickers, chat_task_assignees, chat_tasks, chat_thread_participants, chat_threads, leave_catalog_translations, leave_catalogs, leave_policy_settings, project_members, talk_post_attachments, talk_post_comment_attachments, talk_post_comment_edit_history, talk_post_comment_reactions, talk_post_comments, talk_post_reactions, talk_post_stats, talk_post_tags, talk_posts, talk_tags, user_leave_month_end_snapshots, user_leave_monthly_balances, user_leave_year_balances
+
+## users rows=360 pk=['id']
+  cols: id:int4!, username:varchar!, email:varchar!, password_hash:varchar, created_at:timestamptz, updated_at:timestamptz, last_login:timestamptz, is_active:bool, email_verified:bool, email_verification_token:varchar, email_verification_expires_at:timestamptz, is_deleted:bool!, deleted_at:timestamptz, edited_by_id:int8, restored_at:timestamptz
+  UQ: users_email_key (email)
+  UQ: users_pkey (id)
+  UQ: users_username_key (username)
+
+## user_profiles rows=360 pk=['id']
+  cols: id:int4!, user_id:int4!, display_name:varchar, avatar_url:text, birth_date:date, mobile_phone:varchar, office_phone:varchar, fax_number:varchar, employee_number:varchar, department_id:int4, grade:varchar, duty:varchar, joining_date:date, locale:varchar, timezone:varchar, created_at:timestamptz, updated_at:timestamptz, bio:text, address:text, social_links:jsonb, cover_image_url:text, eng_name:varchar, gender:varchar, section:varchar, contract_type:varchar, contract_period_from:date, contract_period_to:date, position:varchar, is_resigned:bool!, resigned_at:timestamptz, attendance_mode:varchar!, tenant_id:int8!, tax_code:varchar
+  UQ: user_profiles_pkey (id)
+  UQ: ux_user_profiles_tenant_user (tenant_id, user_id)
+
+## tenants rows=1 pk=['id']
+  cols: id:int8!, tenant_key:varchar!, name:varchar!, status:varchar!, isolation_mode:varchar!, is_default:bool!, created_by_id:int8, updated_by_id:int8, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: tenants_pkey (id)
+  UQ: ux_tenants_active_tenant_key (lower((tenant_key)::text)) WHERE (is_deleted = false)
+  UQ: ux_tenants_single_default (is_default) WHERE ((is_default = true) AND (is_deleted = false))
+
+## tenant_user_memberships rows=360 pk=['id']
+  cols: id:int8!, tenant_id:int8!, user_id:int8!, status:varchar!, is_default:bool!, joined_at:timestamptz, created_by_id:int8, updated_by_id:int8, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: tenant_user_memberships_pkey (id)
+  UQ: ux_tenant_user_memberships_active_pair (tenant_id, user_id) WHERE (is_deleted = false)
+  UQ: ux_tenant_user_memberships_default_per_user (user_id) WHERE ((is_default = true) AND (is_deleted = false))
+
+## departments rows=103 pk=['id']
+  cols: id:int4!, code:varchar, name:varchar!, parent_id:int4, sort_order:int4, depth:int4, path:text, is_active:bool, metadata:jsonb, created_at:timestamptz, updated_at:timestamptz, manager_user_id:int4, department_type:varchar!, level:varchar, color:varchar, company_id:int4, site_id:int4, cost_center_id:int4, effective_from:date, effective_to:date, tenant_id:int8!
+  UQ: departments_pkey (id)
+  UQ: ux_departments_tenant_code (tenant_id, lower((code)::text)) WHERE (code IS NOT NULL)
+
+## department_members rows=397 pk=['id']
+  cols: id:int8!, department_id:int4!, user_id:int4!, position_id:int8, role_in_department:varchar, is_primary:bool!, effective_from:date!, effective_to:date, created_at:timestamptz!, updated_at:timestamptz!, tenant_id:int8!
+  UQ: department_members_pkey (id)
+  UQ: ux_department_members_tenant_assignment_period (tenant_id, department_id, user_id, effective_to)
+  UQ: ux_department_members_tenant_primary_active_user (tenant_id, user_id) WHERE ((is_primary = true) AND (effective_to IS NULL))
+
+## roles rows=42 pk=['id']
+  cols: id:int4!, code:varchar!, name:varchar!, description:text, level:int4!, is_active:bool, is_system:bool, created_at:timestamptz, updated_at:timestamptz, created_by:int4, tenant_id:int8!
+  UQ: roles_pkey (id)
+  UQ: ux_roles_tenant_code (tenant_id, lower((code)::text))
+
+## permissions rows=247 pk=['id']
+  cols: id:int4!, code:varchar!, resource_type:varchar!, resource_id:int4, action_id:int4, description:text, created_at:timestamptz, rule_id:int8
+  UQ: permissions_code_key (code)
+  UQ: permissions_pkey (id)
+  UQ: uq_permissions_menu_resource_action (resource_type, resource_id, action_id) WHERE ((resource_type)::text = 'menu'::text)
+
+## user_role_assignments rows=448 pk=['id']
+  cols: id:int4!, user_id:int4!, role_id:int4!, assigned_at:timestamptz, assigned_by:int4, tenant_id:int8!
+  UQ: user_role_assignments_pkey (id)
+  UQ: ux_user_role_assignments_tenant_user_role (tenant_id, user_id, role_id)
+
+## role_permissions rows=1535 pk=['id']
+  cols: id:int4!, role_id:int4!, permission_id:int4!, is_granted:bool, granted_at:timestamptz, granted_by:int4, tenant_id:int8!
+  UQ: role_permissions_pkey (id)
+  UQ: ux_role_permissions_tenant_role_permission (tenant_id, role_id, permission_id)
+
+## user_permissions rows=51 pk=['id']
+  cols: id:int4!, user_id:int4!, permission_id:int4!, is_granted:bool, granted_at:timestamptz, granted_by:int4, tenant_id:int8!
+  UQ: user_permissions_pkey (id)
+  UQ: ux_user_permissions_tenant_user_permission (tenant_id, user_id, permission_id)
+
+## projects rows=65 pk=['id']
+  cols: id:int8!, name:text!, key:text!, description:text, icon:text, color_code:text, status:text, created_by_user_id:int8!, created_at:timestamptz, updated_at:timestamptz, metadata:jsonb, is_deleted:bool, deleted_at:timestamptz, deleted_by_id:int8, status_id:int4!, start_date:timestamptz, end_date:timestamptz, sort_order:int4!, activity_logging_mode:text!, members_count:int4!, tickets_count:int4!, completed_tickets_count:int4!, client_code:varchar, service_type:varchar, classification:varchar, stage:varchar, period_ym:varchar, phase_round:varchar, contract_file_id:int8, approval_status:varchar, approved_by_user_id:int8, approved_at:timestamptz, reject_reason:text, plan_code:varchar, approver_user_ids:_int8, contract_translation_file_id:int8, payment_terms:varchar
+  UQ: projects_pkey (id)
+  UQ: uq_projects_key (key) WHERE (is_deleted = false)
+
+## project_members rows=356 pk=['id']
+  cols: id:int8!, project_id:int8!, user_id:int8!, role:text, joined_at:timestamptz, invited_by_user_id:int8
+  UQ: project_members_pkey (id)
+  UQ: uq_project_members_project_user (project_id, user_id)
+
+## tickets rows=668 pk=['id']
+  cols: id:int8!, project_id:int8!, sprint_id:int8, parent_ticket_id:int8, code:text, title:text!, description:text, priority:text, due_date:timestamptz, start_date:timestamptz, completed_at:timestamptz, estimated_hours:numeric, story_points:int4, comments_count:int4, attachments_count:int4, checklists_count:int4, checklists_completed:int4, position:int8, created_by_user_id:int8!, created_at:timestamptz, updated_at:timestamptz, is_deleted:bool, deleted_at:timestamptz, deleted_by_id:int8, note:text, status:text!, column_id:int8, actual_hours:numeric, type_id:int8, quantity:numeric!, unit_price:numeric!
+  UQ: tickets_pkey (id)
+
+## ticket_assignees rows=1008 pk=['id']
+  cols: id:int8!, ticket_id:int8!, user_id:int8!, assigned_at:timestamptz, assigned_by_user_id:int8
+  UQ: ticket_assignees_pkey (id)
+  UQ: uq_ticket_assignees_ticket_user (ticket_id, user_id)
+
+## project_sprints rows=40 pk=['id']
+  cols: id:int8!, project_id:int8!, name:text!, goal:text, start_date:timestamptz, end_date:timestamptz, status:text, created_at:timestamptz, updated_at:timestamptz
+  UQ: project_sprints_pkey (id)
+
+## kanban_columns rows=268 pk=['id']
+  cols: id:int8!, project_id:int8!, title:text!, status_group:text!, color_class:text, position:int4, is_default:bool, ticket_limit:int4, created_at:timestamptz, updated_at:timestamptz
+  UQ: kanban_columns_pkey (id)
+
+## approval_requests rows=4709 pk=['id']
+  cols: id:int8!, code:varchar, request_type:varchar!, status:varchar!, title:text, reason:text, created_by_user_id:int4!, created_at:timestamptz, updated_at:timestamptz, submitted_at:timestamptz, completed_at:timestamptz, start_date:date, start_half:varchar, end_date:date, end_half:varchar, total_days:numeric, payload:jsonb, is_deleted:bool, deleted_at:timestamptz, leave_type:varchar
+  UQ: approval_requests_code_key (code)
+  UQ: approval_requests_pkey (id)
+
+## approval_participants rows=12720 pk=['id']
+  cols: id:int8!, request_id:int8!, user_id:int4!, participant_role:varchar!, sequence_order:int4, action_status:varchar, acted_at:timestamptz, note:text, created_at:timestamptz
+  UQ: approval_participants_pkey (id)
+  UQ: approval_participants_request_id_user_id_participant_role_key (request_id, user_id, participant_role)
+
+## approval_workflow_templates rows=9 pk=['id']
+  cols: id:int8!, code:text!, name:text!, request_type:varchar!, is_active:bool!, priority:int4!, created_at:timestamptz, updated_at:timestamptz
+  UQ: approval_workflow_templates_code_key (code)
+  UQ: approval_workflow_templates_pkey (id)
+
+## schedule_events rows=349 pk=['id']
+  cols: id:int8!, user_id:int8!, group_id:int8, title:varchar!, description:text, notes:text, event_date:date!, start_time:time!, end_time:time!, type_id:int4, category_id:int4, room_id:int4, location:text, visibility:varchar, is_all_day:bool, customer:varchar, recurrence_type:varchar, recurrence_end_date:date, created_at:timestamptz, updated_at:timestamptz, is_deleted:bool, deleted_at:timestamptz, deleted_by_id:int8, end_date:date!, updated_by_id:int8
+  UQ: schedule_events_pkey (id)
+
+## schedule_event_participants rows=1241 pk=['id']
+  cols: id:int8!, event_id:int8!, user_id:int8!, status:varchar, is_required:bool, created_at:timestamptz, updated_at:timestamptz
+  UQ: schedule_event_participants_event_id_user_id_key (event_id, user_id)
+  UQ: schedule_event_participants_pkey (id)
+
+## schedule_rooms rows=13 pk=['id']
+  cols: id:int4!, name:varchar!, capacity:int4, description:text, sort_order:int4, is_active:bool, created_at:timestamptz, updated_at:timestamptz
+  UQ: schedule_rooms_name_key (name)
+  UQ: schedule_rooms_pkey (id)
+
+## notices rows=99 pk=['id']
+  cols: id:int8!, title:text!, content:text, notice_type:varchar, audience_id:int4, created_by_user_id:int4!, created_at:timestamptz, updated_at:timestamptz, is_published:bool, published_at:timestamptz, is_deleted:bool, deleted_at:timestamptz, priority:varchar
+  UQ: notices_pkey (id)
+
+## audiences rows=116 pk=['id']
+  cols: id:int4!, code:varchar, name:varchar, audience_type:varchar!, is_system:bool, owner_user_id:int4, is_active:bool, metadata:jsonb, created_at:timestamptz, updated_at:timestamptz
+  UQ: audiences_code_key (code)
+  UQ: audiences_pkey (id)
+
+## talk_posts rows=247 pk=['id']
+  cols: id:int8!, author_user_id:int4!, audience_id:int4, title:text, content:text!, created_at:timestamptz, updated_at:timestamptz, is_deleted:bool, deleted_at:timestamptz
+  UQ: talk_posts_pkey (id)
+
+## assets rows=685 pk=['id']
+  cols: id:int8!, code:varchar!, name:varchar!, description:text, category_id:int4!, purchase_date:date, purchase_price:numeric, supplier:varchar, invoice_number:varchar, warranty_expiry_date:date, current_value:numeric, status:varchar, location:text, department_id:int4, assigned_user_id:int4, serial_number:varchar, model:varchar, manufacturer:varchar, specifications:jsonb, barcode:varchar, qr_code_url:text, created_by_user_id:int4!, created_at:timestamptz, updated_at:timestamptz, is_deleted:bool, deleted_at:timestamptz, acquisition_type:varchar!, lease_start_date:date, lease_end_date:date, lease_vendor:varchar, lease_contract_number:varchar, lease_monthly_fee:numeric, lease_deposit:numeric, unit:varchar, quantity:int4!, condition:varchar
+  UQ: assets_code_key (code)
+  UQ: assets_pkey (id)
+
+## asset_categories rows=30 pk=['id']
+  cols: id:int4!, code:varchar!, name:varchar!, parent_id:int4, sort_order:int4, is_active:bool, created_at:timestamptz, updated_at:timestamptz
+  UQ: asset_categories_code_key (code)
+  UQ: asset_categories_pkey (id)
+
+## files rows=3255 pk=['id']
+  cols: id:int8!, storage_provider:varchar, file_url:text!, original_name:text!, content_type:varchar, file_ext:varchar, size_bytes:int8, checksum_sha256:varchar, uploaded_by_user_id:int4, uploaded_at:timestamptz, is_deleted:bool, deleted_at:timestamptz, metadata:jsonb, deleted_by_id:int4, request_type:varchar
+  UQ: files_pkey (id)
+  UQ: files_storage_provider_file_url_key (storage_provider, file_url)
+
+## chat_conversations rows=329 pk=['id']
+  cols: id:int8!, conversation_type:varchar!, direct_key:text, title:text, created_by_user_id:int4, created_at:timestamptz, updated_at:timestamptz, avatar_url:text, metadata:jsonb, last_message_id:int8, last_message_seq:int8!, theme:varchar!, active_emoji:varchar!
+  UQ: chat_conversations_pkey (id)
+  UQ: uq_chat_conversations_direct_key (direct_key) WHERE (direct_key IS NOT NULL)
+
+## chat_conversation_members rows=783 pk=['id']
+  cols: id:int8!, conversation_id:int8!, user_id:int4!, role:varchar, joined_at:timestamptz, last_read_message_id:int8, last_delivered_message_id:int8, is_pinned:bool!, is_muted:bool!, archived_at:timestamptz, is_marked_unread:bool!, hidden_at:timestamptz, last_visible_message_id:int8, unread_count:int4!, last_read_message_seq:int8!, last_visible_message_seq:int8, nickname:varchar, history_cleared_message_seq:int8!, is_deleted:bool!, deleted_at:timestamptz, deleted_by_id:int8
+  UQ: chat_conversation_members_pkey (id)
+  UQ: uq_chat_conversation_members_conversation_user (conversation_id, user_id)
+
+## user_leave_monthly_balances rows=4238 pk=['id']
+  cols: id:int8!, user_id:int8!, year:int4!, month:int4!, accrued_days:numeric!, used_days:numeric!, note:text, updated_by_user_id:int8, created_at:timestamptz!, updated_at:timestamptz!, pending_accrued_days:numeric!
+  UQ: uq_user_leave_monthly_balances_user_year_month (user_id, year, month)
+  UQ: user_leave_monthly_balances_pkey (id)
+
+## attendance_daily_records rows=54489 pk=['id']
+  cols: id:int8!, employee_code:varchar!, user_id:int8, username:varchar, full_name:varchar, work_date:date!, first_check_in:timestamptz, last_check_out:timestamptz, swipe_count:int4!, first_event_id:int8, last_event_id:int8, status:varchar!, is_late:bool!, is_early_leave:bool!, actual_minutes:int4!, metadata:jsonb!, created_at:timestamptz!, updated_at:timestamptz!
+  UQ: attendance_daily_records_pkey (id)
+  UQ: uq_attendance_daily_records_employee_date (employee_code, work_date)
+
+## user_contract_histories rows=457 pk=['id']
+  cols: id:int8!, user_id:int8!, contract_type:varchar, contract_period_from:date, contract_period_to:date, is_current:bool!, note:text, created_at:timestamptz!, updated_at:timestamptz!, created_by_user_id:int8, updated_by_user_id:int8, tenant_id:int8!
+  UQ: user_contract_histories_pkey (id)
+  UQ: ux_user_contract_histories_tenant_current (tenant_id, user_id) WHERE (is_current = true)
+
+## project_tags rows=20 pk=['id']
+  cols: id:int8!, project_id:int8!, name:text!, color:text, created_at:timestamptz
+  UQ: project_tags_pkey (id)
+  UQ: uq_project_tags_name (project_id, name)
+
+## ticket_tags rows=96 pk=['id']
+  cols: id:int8!, ticket_id:int8!, tag_id:int8!
+  UQ: ticket_tags_pkey (id)
+  UQ: uq_ticket_tags_ticket_tag (ticket_id, tag_id)
