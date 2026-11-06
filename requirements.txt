@@ -5,6 +5,14 @@
 typing-extensions>=4.5.0
 pydantic>=2.0.0
 
-# Optional Database Drivers for Live Integration Testing (Phase 2)
+# Database Drivers & Vector / Semantic Search
 psycopg2-binary>=2.9.9
 neo4j>=5.15.0
+qdrant-client>=1.7.0
+sentence-transformers>=2.2.0
+
+# LLM Inference & Serving
+vllm>=0.31.0
+openai>=1.0.0
+
+

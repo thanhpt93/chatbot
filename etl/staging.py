@@ -6,6 +6,7 @@ Supports automated restoration of raw PostgreSQL binary dumps (.dump).
 """
 
 import os
+import sys
 import json
 import logging
 import subprocess
@@ -22,9 +23,14 @@ def restore_dump(dump_path: Optional[str] = None, dbname: str = "inf_nffice") ->
         logger.error(f"Dump file not found: {target_dump}")
         return False
 
-    pg_restore_exe = r"C:\Users\admin\miniconda3\envs\chat\Library\bin\pg_restore.exe"
-    if not os.path.exists(pg_restore_exe):
-        pg_restore_exe = "pg_restore"
+    env_pg_restore = Path(sys.executable).parent / "pg_restore"
+    if env_pg_restore.exists():
+        pg_restore_exe = str(env_pg_restore)
+    elif os.path.exists(r"C:\Users\admin\miniconda3\envs\chat\Library\bin\pg_restore.exe"):
+        pg_restore_exe = r"C:\Users\admin\miniconda3\envs\chat\Library\bin\pg_restore.exe"
+    else:
+        import shutil
+        pg_restore_exe = shutil.which("pg_restore") or "pg_restore"
 
     cmd = [
         pg_restore_exe,
@@ -42,7 +48,10 @@ def restore_dump(dump_path: Optional[str] = None, dbname: str = "inf_nffice") ->
 
     logger.info(f"Restoring dump {target_dump.name} into database '{dbname}' on port {config.pg_port}...")
     try:
-        proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
+        env = os.environ.copy()
+        if config.pg_password:
+            env["PGPASSWORD"] = str(config.pg_password)
+        proc = subprocess.run(cmd, env=env, capture_output=True, text=True, errors="replace")
         if proc.returncode in (0, 1):  # 0: success, 1: non-critical warnings
             logger.info("Dump restoration completed successfully.")
             return True
@@ -86,9 +95,25 @@ class StagingExtractor:
         from psycopg2.extras import RealDictCursor
 
         tables = [
-            "tenants", "users", "tenant_user_memberships", "departments",
-            "department_members", "audiences", "notices", "chat_conversations",
-            "chat_messages", "approval_requests", "projects", "assets", "asset_categories"
+            # 1. Organization & Users
+            "tenants", "users", "user_profiles", "tenant_user_memberships",
+            "departments", "department_members", "roles", "permissions", "user_role_assignments",
+            "audiences", "audience_department_members", "audience_user_members",
+            # 2. Collaboration, Communication & Policies
+            "notices", "notice_attachments", "regulations", "talk_posts", "talk_post_comments",
+            "schedule_events", "schedule_rooms", "schedule_event_participants",
+            "chat_conversations", "chat_conversation_members", "chat_messages",
+            # 3. Workflows & Approvals
+            "approval_requests", "approval_participants", "approval_workflow_steps",
+            "approval_vacation_request_segments", "approval_overtime_entries",
+            "approval_explanation_entries", "approval_weekend_work_entries", "approval_comments",
+            # 4. Project & Issue Tracking (Kanban/Tickets)
+            "projects", "project_members", "project_sprints", "tickets", "ticket_assignees",
+            "ticket_types", "kanban_columns", "ticket_comments",
+            # 5. Assets & Resource Management
+            "assets", "asset_categories", "asset_assignments",
+            # 6. HR & Contracts
+            "user_leave_year_balances", "user_leave_monthly_balances", "user_contract_histories", "leave_catalogs"
         ]
         data = {}
         conn = psycopg2.connect(

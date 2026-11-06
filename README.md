@@ -27,3 +27,19 @@ python scripts/phase1_2_3_1/run_all.py
 ```bash
 python scripts/phase1_2_3_1/package_deliverables.py
 ```
+
+## Running Local LLM Serving (vLLM) & Web Chat UI
+
+### 1. Khởi chạy vLLM Serving (Qwen2.5-7B)
+```bash
+./scripts/serve_vllm.sh
+```
+
+### 2. Khởi chạy Giao diện Chatbot (Web UI)
+Mở một terminal mới và chạy:
+```bash
+./scripts/run_ui.sh
+# hoặc: python main.py chat-ui
+```
+Sau đó mở trình duyệt truy cập: **`http://localhost:8080`**
+

@@ -188,6 +188,11 @@ def main():
     # Command: status
     subparsers.add_parser("status", help="Check database and storage health status")
 
+    # Command: chat-ui
+    ui_parser = subparsers.add_parser("chat-ui", help="Start Web Chatbot User Interface")
+    ui_parser.add_argument("--port", type=int, default=8080, help="Port to bind (default: 8080)")
+    ui_parser.add_argument("--host", type=str, default="0.0.0.0", help="Host address (default: 0.0.0.0)")
+
     args = parser.parse_args()
 
     if args.command == "run-etl" or args.command is None:
@@ -202,6 +207,11 @@ def main():
         launch_visualizer(auto_open=not args.no_open)
     elif args.command == "status":
         check_status()
+    elif args.command == "chat-ui":
+        from scripts.chat_ui import app
+        import uvicorn
+        print(f"\n[Chat UI] Starting web server on http://localhost:{args.port} ...")
+        uvicorn.run(app, host=args.host, port=args.port)
 
 if __name__ == "__main__":
     main()

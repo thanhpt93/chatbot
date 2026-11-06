@@ -17,9 +17,9 @@ class MultiTenantRetriever:
 
         self.models = models
         if config.qdrant_url:
-            self.client = QdrantClient(url=config.qdrant_url)
+            self.client = QdrantClient(url=config.qdrant_url, timeout=60)
         else:
-            self.client = QdrantClient(path=str(config.qdrant_path))
+            self.client = QdrantClient(path=str(config.qdrant_path), timeout=60)
 
         self.collection_name = config.qdrant_collection
         self.embedder = TextEmbedder()
