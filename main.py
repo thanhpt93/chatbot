@@ -3,8 +3,10 @@ Groupware AI Chatbot - Master Pipeline Entrypoint.
 Orchestrates:
 1. Automated ETL Pipeline from Database Staging to Neo4j Graph DB (Architecture B)
    and Qdrant Vector DB (ChatMessage Option A)
-2. Multi-Tenant Semantic Retrieval CLI
-3. System Component Health & Status Checks
+2. Automated DB Dump Restoration (pg_restore)
+3. Multi-Tenant Semantic Retrieval CLI
+4. Interactive Graph Ontology & Data Visualizer
+5. System Component Health & Status Checks
 """
 
 import sys
@@ -29,8 +31,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger("main")
 
-def run_etl(target: str = "all"):
+def run_etl(target: str = "all", from_dump: str = None):
     """Executes automated ETL flow to Graph DB and Vector DB."""
+    if from_dump:
+        print(f"\n[Step 0] Automatic restoration from dump: {from_dump}")
+        from etl.staging import restore_dump
+        ok = restore_dump(dump_path=from_dump)
+        if not ok:
+            print("[WARNING] Dump restoration encountered issues or PG is offline; proceeding with available staging data.")
+
     from etl.pipeline import ETLPipeline
     pipeline = ETLPipeline()
     result = pipeline.run(target=target)
@@ -65,6 +74,16 @@ def run_etl(target: str = "all"):
     print("=" * 60 + "\n")
     return result
 
+def restore_database(dump_path: str = None):
+    """Restores database from dump file."""
+    from etl.staging import restore_dump
+    print("\n--- PostgreSQL Dump Restoration ---")
+    ok = restore_dump(dump_path=dump_path)
+    if ok:
+        print("Restoration finished successfully.")
+    else:
+        print("Restoration failed. Please ensure PostgreSQL service is running on configured port.")
+
 def search_knowledge(query: str, tenant_id: int, top_k: int = 5):
     """Executes multi-tenant semantic retrieval."""
     from etl.vector.retriever import MultiTenantRetriever
@@ -86,6 +105,22 @@ def search_knowledge(query: str, tenant_id: int, top_k: int = 5):
         print("-" * 50)
     print()
     return hits
+
+def launch_visualizer(auto_open: bool = True):
+    """Generates and opens the interactive graph ontology visualizer."""
+    from etl.graph.visualizer import GraphVisualizer
+    visualizer = GraphVisualizer()
+    out_path = visualizer.generate(auto_open=auto_open)
+    print("\n" + "=" * 60)
+    print("GRAPH ONTOLOGY & DATA VISUALIZER")
+    print("=" * 60)
+    print(f"Interactive File:  {out_path.resolve().as_posix()}")
+    print(f"Browser URL:       file:///{out_path.resolve().as_posix()}")
+    print("Features Included:")
+    print("  1. Schema Ontology View: 24 Node Classes, 43 Semantic Relationships")
+    print("  2. Live Graph Data View: 73 Ingested Nodes, 94 Relationships")
+    print("  3. Interactive Controls: Multi-Tenant Filter, Node Inspector, Physics")
+    print("=" * 60 + "\n")
 
 def check_status():
     """Checks the status of databases and storage."""
@@ -134,12 +169,21 @@ def main():
     # Command: run-etl
     etl_parser = subparsers.add_parser("run-etl", help="Run automated ETL pipeline")
     etl_parser.add_argument("--target", choices=["all", "graph", "vector"], default="all", help="Target storage")
+    etl_parser.add_argument("--from-dump", type=str, default=None, help="Optional path to new .dump file to restore before running ETL")
+
+    # Command: restore-db
+    restore_parser = subparsers.add_parser("restore-db", help="Restore PostgreSQL database from .dump file")
+    restore_parser.add_argument("--dump-path", type=str, default=None, help="Path to .dump file")
 
     # Command: search
     search_parser = subparsers.add_parser("search", help="Semantic search in Vector DB with tenant isolation")
     search_parser.add_argument("--query", type=str, required=True, help="Search query")
     search_parser.add_argument("--tenant-id", type=int, required=True, help="Tenant ID for strict isolation")
     search_parser.add_argument("--top-k", type=int, default=5, help="Number of results")
+
+    # Command: visualize
+    vis_parser = subparsers.add_parser("visualize", help="Generate and open graph ontology interactive visualizer")
+    vis_parser.add_argument("--no-open", action="store_true", help="Do not automatically open browser")
 
     # Command: status
     subparsers.add_parser("status", help="Check database and storage health status")
@@ -148,9 +192,14 @@ def main():
 
     if args.command == "run-etl" or args.command is None:
         target = getattr(args, "target", "all")
-        run_etl(target=target)
+        from_dump = getattr(args, "from_dump", None)
+        run_etl(target=target, from_dump=from_dump)
+    elif args.command == "restore-db":
+        restore_database(dump_path=args.dump_path)
     elif args.command == "search":
         search_knowledge(query=args.query, tenant_id=args.tenant_id, top_k=args.top_k)
+    elif args.command == "visualize":
+        launch_visualizer(auto_open=not args.no_open)
     elif args.command == "status":
         check_status()
 

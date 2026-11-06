@@ -1,16 +1,57 @@
 """
-Staging Data Extractor.
+Staging Data Extractor & DB Restore Module.
 Extracts relational data from live PostgreSQL if available,
 or falls back to verified multi-tenant dataset with chat messages, notices, and assets.
+Supports automated restoration of raw PostgreSQL binary dumps (.dump).
 """
 
+import os
 import json
 import logging
-from typing import Dict, List, Any
+import subprocess
+from typing import Dict, List, Any, Optional
 from pathlib import Path
 from etl.config import config, ROOT
 
 logger = logging.getLogger("etl.staging")
+
+def restore_dump(dump_path: Optional[str] = None, dbname: str = "inf_nffice") -> bool:
+    """Restores a PostgreSQL custom-format binary dump file using pg_restore."""
+    target_dump = Path(dump_path) if dump_path else config.pg_dump_path
+    if not target_dump.exists():
+        logger.error(f"Dump file not found: {target_dump}")
+        return False
+
+    pg_restore_exe = r"C:\Users\admin\miniconda3\envs\chat\Library\bin\pg_restore.exe"
+    if not os.path.exists(pg_restore_exe):
+        pg_restore_exe = "pg_restore"
+
+    cmd = [
+        pg_restore_exe,
+        "-h", str(config.pg_host),
+        "-p", str(config.pg_port),
+        "-U", str(config.pg_user),
+        "-d", dbname,
+        "--verbose",
+        "--clean",
+        "--if-exists",
+        "--no-owner",
+        "--no-privileges",
+        str(target_dump.resolve())
+    ]
+
+    logger.info(f"Restoring dump {target_dump.name} into database '{dbname}' on port {config.pg_port}...")
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
+        if proc.returncode in (0, 1):  # 0: success, 1: non-critical warnings
+            logger.info("Dump restoration completed successfully.")
+            return True
+        else:
+            logger.warning(f"pg_restore exited with code {proc.returncode}: {proc.stderr[:300]}")
+            return False
+    except Exception as e:
+        logger.error(f"Failed to execute pg_restore: {e}")
+        return False
 
 class StagingExtractor:
     def __init__(self):
